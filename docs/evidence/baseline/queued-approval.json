@@ -1,0 +1,127 @@
+{
+  "stage": "S6-queued-approval",
+  "passed": true,
+  "synthetic_reviewer": true,
+  "paid_api_calls": 0,
+  "task_id": "586cb942-c623-4ccb-8056-66be0fafb679",
+  "initial_api_pid": 8848,
+  "restarted_api_pid": 32108,
+  "before": {
+    "status": "waiting_approval",
+    "worker_id": "worker-00d733e99af0479b",
+    "task_id": "586cb942-c623-4ccb-8056-66be0fafb679",
+    "task_status": "WAITING_APPROVAL",
+    "revision": 2,
+    "scheduling": {
+      "mode": "queued",
+      "schema_version": 1,
+      "state": "WAITING",
+      "created_at": "2026-11-14T06:23:38.043+00:00",
+      "generation": 1,
+      "claimed_by": "worker-00d733e99af0479b",
+      "claimed_at": "2026-11-14T06:23:40.485+00:00",
+      "execution_deadline_at": 1794637540.484993,
+      "lease_seconds": 30.0,
+      "last_heartbeat_at": 1794637420.4950109,
+      "lease_expires_at": 1794637450.4950109,
+      "heartbeat_count": 1,
+      "lease_status": "RELEASED"
+    }
+  },
+  "after_approval": {
+    "task_id": "586cb942-c623-4ccb-8056-66be0fafb679",
+    "task_status": "WAITING_APPROVAL",
+    "revision": 2,
+    "scheduling": {
+      "mode": "queued",
+      "schema_version": 1,
+      "state": "READY",
+      "created_at": "2026-11-14T06:23:38.043+00:00",
+      "generation": 1,
+      "claimed_by": "worker-00d733e99af0479b",
+      "claimed_at": "2026-11-14T06:23:40.485+00:00",
+      "recovery_mode": "approval",
+      "recovery_code": "approval_granted",
+      "execution_deadline_at": 1794637547.3486605,
+      "lease_seconds": 30.0,
+      "last_heartbeat_at": 1794637420.4950109,
+      "lease_expires_at": 1794637450.4950109,
+      "heartbeat_count": 1,
+      "lease_status": "RELEASED"
+    }
+  },
+  "after": {
+    "status": "processed",
+    "worker_id": "worker-b411f72f77ee4dd5",
+    "task_id": "586cb942-c623-4ccb-8056-66be0fafb679",
+    "task_status": "SUCCEEDED",
+    "revision": 6,
+    "scheduling": {
+      "mode": "queued",
+      "schema_version": 1,
+      "state": "FINISHED",
+      "created_at": "2026-11-14T06:23:38.043+00:00",
+      "generation": 2,
+      "claimed_by": "worker-b411f72f77ee4dd5",
+      "claimed_at": "2026-11-14T06:23:49.938+00:00",
+      "finished_at": "2026-11-14T06:23:50.237+00:00",
+      "recovery_mode": "approval",
+      "recovery_code": "approval_granted",
+      "execution_deadline_at": 1794637547.3486605,
+      "lease_seconds": 30.0,
+      "last_heartbeat_at": 1794637429.9539819,
+      "lease_expires_at": 1794637459.9539819,
+      "heartbeat_count": 1,
+      "lease_status": "RELEASED"
+    }
+  },
+  "business_before": {
+    "ticket_id": "IT-001",
+    "status": "open",
+    "write_count": 0
+  },
+  "business_after": {
+    "ticket_id": "IT-001",
+    "status": "resolved",
+    "write_count": 1
+  },
+  "manual_resume_calls": 0,
+  "calls": [
+    {
+      "call_id": "0f163081-d7b3-4ecc-a30c-c36c5487c782",
+      "task_id": "586cb942-c623-4ccb-8056-66be0fafb679",
+      "run_id": "a9db70d8-fddc-4414-be7d-1f013096e814",
+      "ordinal": 1,
+      "kind": "tool",
+      "origin": "runtime",
+      "tool_name": "update_ticket_status",
+      "tool_version": 1,
+      "policy_version": "mock-ticket-v1",
+      "request_sha256": "239eb9b26b0c00ea7de665fa814781d1d1392282cc1fb94214e5a126453cb775",
+      "arguments_sha256": "87a5b1b7bfafc370ebd7dae204e238cf672ef04be4ced01874f2eb94ce0230d4",
+      "operation_id": "8ad479cb-fc62-43c3-be71-0830db5d9ac0",
+      "status": "SUCCEEDED",
+      "code": "verified_business_write",
+      "created_at": "2026-11-14T06:23:40.588+00:00",
+      "finished_at": "2026-11-14T06:23:50.050+00:00"
+    },
+    {
+      "call_id": "f77755ae-7cab-4958-9341-5052f1441d11",
+      "task_id": "586cb942-c623-4ccb-8056-66be0fafb679",
+      "run_id": "a65c6e26-d621-427e-9756-6f1e4a135512",
+      "ordinal": 1,
+      "kind": "tool",
+      "origin": "runtime",
+      "tool_name": "read_ticket",
+      "tool_version": 1,
+      "policy_version": "mock-ticket-v1",
+      "request_sha256": "c35ae3873fd274eb2c87a99a8259228e60db06e4813c070db1e5228a8dcc8467",
+      "arguments_sha256": "f087a026a80497f5ef564509a3770140de1014eb145503db43e95a25ca20b685",
+      "operation_id": null,
+      "status": "SUCCEEDED",
+      "code": "ticket_read",
+      "created_at": "2026-11-14T06:23:50.123+00:00",
+      "finished_at": "2026-11-14T06:23:50.154+00:00"
+    }
+  ]
+}

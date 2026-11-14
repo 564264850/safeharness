@@ -1,0 +1,159 @@
+{
+  "date": "2026-11-12",
+  "status": "passed",
+  "implementation_sha256": "9fdd9484e8b0db5ae1bc5ecdad2bb8e21723e2b5c7f4045484ccacb2a13b908a",
+  "regression": {
+    "tests": 283,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "new_regression_cases": 20,
+  "regression_xml": "artifacts/approval-loop-regression.xml",
+  "acceptance": {
+    "report": "artifacts/m4-acceptance/97ba0f8f-4713-4af0-9840-deabbfe6c35e/report.json",
+    "passed": true,
+    "groups": {
+      "coding": {
+        "expected_instances": 30,
+        "evidence_instances": 30,
+        "passed": 30,
+        "families": [
+          "chunks",
+          "clamp",
+          "median",
+          "merge_counts",
+          "normalize_tags",
+          "parse_bool",
+          "redact_tokens",
+          "retry_delay",
+          "safe_divide",
+          "unique_ordered"
+        ]
+      },
+      "it": {
+        "expected_instances": 30,
+        "evidence_instances": 30,
+        "passed": 30,
+        "families": [
+          "approve_execute",
+          "cancel",
+          "cross_owner",
+          "decision_replay",
+          "proposal",
+          "read",
+          "read_only",
+          "reject",
+          "scope_revoked",
+          "wrong_digest"
+        ]
+      },
+      "attack": {
+        "expected_instances": 40,
+        "evidence_instances": 40,
+        "passed": 40,
+        "families": [
+          "http_authority",
+          "indirect",
+          "path",
+          "schema_scope",
+          "unknown_tool"
+        ]
+      },
+      "fault": {
+        "expected_instances": 20,
+        "evidence_instances": 20,
+        "passed": 20,
+        "families": [
+          "after_business",
+          "after_intent",
+          "after_receipt",
+          "before_intent",
+          "cancelled",
+          "concurrent_replay",
+          "evidence_missing",
+          "expired",
+          "policy_changed",
+          "unapproved"
+        ]
+      }
+    }
+  },
+  "earlier_regression_with_cleanup_failure": {
+    "tests": 279,
+    "failures": 1,
+    "errors": 0,
+    "skipped": 0
+  },
+  "model_validation": [
+    {
+      "report": "artifacts/approval-loop-demos/f7b2c776-9124-4503-8d5e-2dd94239f268/report.json",
+      "task_status": "SUCCEEDED",
+      "usage": {
+        "budget_id": "harness-approval-r4-v1",
+        "calls": 7,
+        "prompt_tokens": 5300,
+        "completion_tokens": 442,
+        "cost_upper_cny": "0.034276",
+        "unknown_usage_calls": 1,
+        "limit_cny": "5",
+        "pricing_version": "deepseek-flash-peak-20261111"
+      }
+    },
+    {
+      "report": "artifacts/deepseek-builds/fdbcd295-11ea-4147-8bd9-706373df0c9e/report.json",
+      "task_status": "FAILED",
+      "usage": {
+        "budget_id": "harness-approval-r4-v1",
+        "calls": 2,
+        "prompt_tokens": 2177,
+        "completion_tokens": 63,
+        "cost_upper_cny": "0.059242",
+        "unknown_usage_calls": 1,
+        "limit_cny": "5",
+        "pricing_version": "deepseek-flash-peak-20261111"
+      }
+    },
+    {
+      "report": "artifacts/deepseek-builds/d9806174-2463-41ca-95b9-ee32d69f0587/report.json",
+      "task_status": "SUCCEEDED",
+      "usage": {
+        "budget_id": "harness-approval-r4-v1",
+        "calls": 4,
+        "prompt_tokens": 15276,
+        "completion_tokens": 415,
+        "cost_upper_cny": "0.033872",
+        "unknown_usage_calls": 0,
+        "limit_cny": "5",
+        "pricing_version": "deepseek-flash-peak-20261111"
+      }
+    }
+  ],
+  "paid_usage": {
+    "calls": 13,
+    "cost_upper_cny": "0.127390",
+    "unknown_usage_calls": 2
+  },
+  "new_default_budget": {
+    "limit_cny": "5.00",
+    "max_calls": 80,
+    "original_m3_budget_preserved": true
+  },
+  "independent_verification": {
+    "call_id": "4fd7bd37-61de-40ad-8ae6-8451b299d32c",
+    "attempt_id": "03602814-b55c-4ad3-8e9c-c79f190db1d4",
+    "kind": "verification",
+    "case_count": 14,
+    "passed": true
+  },
+  "real_process_crash_demo": "artifacts/invocation-demos/f8148aa4-a4b0-4522-bcdc-e9df9c5235b2/report.json",
+  "isolated_wheel_demo": "artifacts/approval-loop-demos/3829349b-2555-4d21-b58a-99abf3f1ead7/report.json",
+  "package": {
+    "wheel": "artifacts\\approval-loop-package\\safeharness-0.1.0-py3-none-any.whl",
+    "sha256": "3871f8b66a8c623903580b417a5371bd1965968f9fc5df9d2464e422f90b1fc9",
+    "python_files_match": 54,
+    "sdist_contains_task_fixtures": true
+  },
+  "legacy_migration_backup": "artifacts/m4-migrations/70dbb8f6-2811-49f5-a9b4-aef631e6de8b/report.json",
+  "ci": "configured; remote workflow not run"
+}

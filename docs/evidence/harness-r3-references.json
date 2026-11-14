@@ -1,0 +1,76 @@
+{
+  "references": [
+    {
+      "project": "pi",
+      "commit": "926b2f8cd8a8ac966f331882557f1bdc98e200de",
+      "path": "packages/agent/src/agent-loop.ts",
+      "url": "https://github.com/earendil-works/pi/blob/926b2f8cd8a8ac966f331882557f1bdc98e200de/packages/agent/src/agent-loop.ts",
+      "sha256": "9d7589b5071ea3b8b3e3c624f9cfc09a976ebf7436024a58213837de4645167d"
+    },
+    {
+      "project": "pi",
+      "commit": "926b2f8cd8a8ac966f331882557f1bdc98e200de",
+      "path": "packages/agent/src/types.ts",
+      "url": "https://github.com/earendil-works/pi/blob/926b2f8cd8a8ac966f331882557f1bdc98e200de/packages/agent/src/types.ts",
+      "sha256": "6ad1a3e1ea6cfa0770421aca9a23726061d8d31fdeb5c17c8acd5d7cea0e74b1"
+    },
+    {
+      "project": "pi",
+      "commit": "926b2f8cd8a8ac966f331882557f1bdc98e200de",
+      "path": "packages/coding-agent/docs/compaction.md",
+      "url": "https://github.com/earendil-works/pi/blob/926b2f8cd8a8ac966f331882557f1bdc98e200de/packages/coding-agent/docs/compaction.md",
+      "sha256": "b5b23d10bb86d8ab32b67f80a7e57febd953222c6da6fd422ae91d232ef28faf"
+    },
+    {
+      "project": "pi",
+      "commit": "926b2f8cd8a8ac966f331882557f1bdc98e200de",
+      "path": "packages/coding-agent/docs/session-format.md",
+      "url": "https://github.com/earendil-works/pi/blob/926b2f8cd8a8ac966f331882557f1bdc98e200de/packages/coding-agent/docs/session-format.md",
+      "sha256": "4f8fc42179b332bcf71fe4c85cc95d914853ff7486d68742954a45316b512a4a"
+    },
+    {
+      "project": "pi",
+      "commit": "926b2f8cd8a8ac966f331882557f1bdc98e200de",
+      "path": "LICENSE",
+      "url": "https://github.com/earendil-works/pi/blob/926b2f8cd8a8ac966f331882557f1bdc98e200de/LICENSE",
+      "sha256": "0457f5bcec3b3b211605dfb5d1a49042fd638f3686a410fe099c24a25af13c48"
+    },
+    {
+      "project": "deepseek",
+      "commit": "e8f7b93a344964de3dca1ace9e72b6e4d6de87cb",
+      "path": "docs/architecture.md",
+      "url": "https://github.com/deepseek-ai/deepseek-harness/blob/e8f7b93a344964de3dca1ace9e72b6e4d6de87cb/docs/architecture.md",
+      "sha256": "6a075f9477ef2c5265568b986ea5edfefcf581da4050f7ccf32e3247875ea942"
+    },
+    {
+      "project": "deepseek",
+      "commit": "e8f7b93a344964de3dca1ace9e72b6e4d6de87cb",
+      "path": "packages/context/README.md",
+      "url": "https://github.com/deepseek-ai/deepseek-harness/blob/e8f7b93a344964de3dca1ace9e72b6e4d6de87cb/packages/context/README.md",
+      "sha256": "ada4b5995e3740bf3203a66099ef0dcb493263857d01948693eab714079b751f"
+    },
+    {
+      "project": "deepseek",
+      "commit": "e8f7b93a344964de3dca1ace9e72b6e4d6de87cb",
+      "path": "LICENSE",
+      "url": "https://github.com/deepseek-ai/deepseek-harness/blob/e8f7b93a344964de3dca1ace9e72b6e4d6de87cb/LICENSE",
+      "sha256": "ebb4f09972aee8608be255debaf78451a68e95c290f55c240dec2ecfa16ea6be"
+    },
+    {
+      "project": "local-pico",
+      "path": "pico/pico/context_manager.py",
+      "sha256": "0fb5db14c5fa5e3747ec121169a1178f98f421510f23d8a5d069a04dd7b43f13"
+    },
+    {
+      "project": "local-pico",
+      "path": "pico/pico/checkpoint.py",
+      "sha256": "6153ed7adf1a24876084da3946ad11fb9b8c80a2f022a86038876e39822d70d6"
+    },
+    {
+      "project": "local-pico",
+      "path": "pico/pico/runtime.py",
+      "sha256": "264be1dc9c56beeddd3817d24971a3080006f06f45d12c3415a3b3c35704731d"
+    }
+  ],
+  "source_embedded_in_wheel": false
+}

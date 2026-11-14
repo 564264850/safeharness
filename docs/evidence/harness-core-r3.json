@@ -1,0 +1,255 @@
+{
+  "scope": "R3 composable Harness, bounded Context and safe Checkpoint recovery",
+  "recorded_at": "2026-11-11T14:18:48+00:00",
+  "implementation_sha256": "9c034e1c7c2be9bf0526a1ace7d671c9d79fa1ff59f101e89957c4d95c6fea8a",
+  "migration_head": "0011_sessions",
+  "regression": {
+    "tests": 260,
+    "new_since_r2": 21,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "docker_enabled": true,
+    "postgres_enabled": true,
+    "junit": "artifacts/harness-core-regression.xml"
+  },
+  "acceptance": {
+    "passed": true,
+    "tests": 120,
+    "report": "artifacts/m4-acceptance/e227703c-acef-446c-9ffb-8a890baa33f9/report.json",
+    "groups": {
+      "coding": {
+        "expected_instances": 30,
+        "evidence_instances": 30,
+        "passed": 30,
+        "families": [
+          "chunks",
+          "clamp",
+          "median",
+          "merge_counts",
+          "normalize_tags",
+          "parse_bool",
+          "redact_tokens",
+          "retry_delay",
+          "safe_divide",
+          "unique_ordered"
+        ]
+      },
+      "it": {
+        "expected_instances": 30,
+        "evidence_instances": 30,
+        "passed": 30,
+        "families": [
+          "approve_execute",
+          "cancel",
+          "cross_owner",
+          "decision_replay",
+          "proposal",
+          "read",
+          "read_only",
+          "reject",
+          "scope_revoked",
+          "wrong_digest"
+        ]
+      },
+      "attack": {
+        "expected_instances": 40,
+        "evidence_instances": 40,
+        "passed": 40,
+        "families": [
+          "http_authority",
+          "indirect",
+          "path",
+          "schema_scope",
+          "unknown_tool"
+        ]
+      },
+      "fault": {
+        "expected_instances": 20,
+        "evidence_instances": 20,
+        "passed": 20,
+        "families": [
+          "after_business",
+          "after_intent",
+          "after_receipt",
+          "before_intent",
+          "cancelled",
+          "concurrent_replay",
+          "evidence_missing",
+          "expired",
+          "policy_changed",
+          "unapproved"
+        ]
+      }
+    },
+    "metrics": {
+      "attack_breach": {
+        "numerator": 0,
+        "denominator": 40,
+        "wilson95": [
+          0,
+          0.08762160119728664
+        ]
+      },
+      "legitimate_false_rejection": {
+        "numerator": 0,
+        "denominator": 117,
+        "unit": "authorized Gateway tool requests; expected read-only denials excluded",
+        "wilson95": [
+          0,
+          0.03178924566273338
+        ]
+      },
+      "recoverable_contract": {
+        "numerator": 10,
+        "denominator": 10,
+        "rate": 1.0,
+        "wilson95": [
+          0.7224672001371107,
+          0.9999999999999999
+        ]
+      },
+      "safe_stop_contracts": 10,
+      "needs_review": 2,
+      "duplicate_business_writes": 0,
+      "latency_ms": {
+        "p50": 282.707,
+        "p95": 8662.674
+      },
+      "unknown_or_failed": 0
+    }
+  },
+  "real_process_demos": [
+    {
+      "label": "source-ticket",
+      "report": "artifacts/harness-demos/94ed8b23-fa12-4ac0-849b-6d9eb6b339ad/report.json",
+      "coding": false,
+      "cases": [
+        {
+          "boundary": "safe",
+          "task_status": "SUCCEEDED",
+          "process_exit": 78,
+          "resumed_model_requests": 1,
+          "generation": 2,
+          "write_file_logical_calls": 0
+        },
+        {
+          "boundary": "uncertain",
+          "task_status": "NEEDS_REVIEW",
+          "process_exit": 78,
+          "resumed_model_requests": 0,
+          "generation": 2,
+          "write_file_logical_calls": 0
+        }
+      ],
+      "context": {
+        "input_bytes": 1881,
+        "message_count": 7,
+        "omitted_groups": 8,
+        "context_sha256": "553f2d032b6a8d3705ffe25dacf850f8b566f4a353d25e00b134a05381d0192d"
+      }
+    },
+    {
+      "label": "source-coding",
+      "report": "artifacts/harness-demos/2564e998-1282-4d98-86d7-2cdbb6ff6621/report.json",
+      "coding": true,
+      "cases": [
+        {
+          "boundary": "safe",
+          "task_status": "SUCCEEDED",
+          "process_exit": 78,
+          "resumed_model_requests": 1,
+          "generation": 2,
+          "write_file_logical_calls": 1
+        },
+        {
+          "boundary": "uncertain",
+          "task_status": "NEEDS_REVIEW",
+          "process_exit": 78,
+          "resumed_model_requests": 0,
+          "generation": 2,
+          "write_file_logical_calls": 1
+        }
+      ],
+      "context": {
+        "input_bytes": 1881,
+        "message_count": 7,
+        "omitted_groups": 8,
+        "context_sha256": "553f2d032b6a8d3705ffe25dacf850f8b566f4a353d25e00b134a05381d0192d"
+      }
+    },
+    {
+      "label": "isolated-wheel-ticket",
+      "report": "artifacts/harness-demos/903f3640-da22-4822-9300-8a0a747cff69/report.json",
+      "coding": false,
+      "cases": [
+        {
+          "boundary": "safe",
+          "task_status": "SUCCEEDED",
+          "process_exit": 78,
+          "resumed_model_requests": 1,
+          "generation": 2,
+          "write_file_logical_calls": 0
+        },
+        {
+          "boundary": "uncertain",
+          "task_status": "NEEDS_REVIEW",
+          "process_exit": 78,
+          "resumed_model_requests": 0,
+          "generation": 2,
+          "write_file_logical_calls": 0
+        }
+      ],
+      "context": {
+        "input_bytes": 1881,
+        "message_count": 7,
+        "omitted_groups": 8,
+        "context_sha256": "553f2d032b6a8d3705ffe25dacf850f8b566f4a353d25e00b134a05381d0192d"
+      }
+    }
+  ],
+  "package": {
+    "source_matches_wheel": true,
+    "source_python_files": 53,
+    "wheel_sha256": "60f282ffeb73dffd7e12b46afb77187abda8572da8f2449448367316b0ac7a1b",
+    "isolated_install_demo_passed": true,
+    "wheel": "artifacts/harness-package/safeharness-0.1.0-py3-none-any.whl"
+  },
+  "migration_backups": {
+    "report": "artifacts/m4-migrations/335cc9d9-8176-4069-a120-d42af1f85e4b/report.json",
+    "results": [
+      {
+        "source": "tasks.sqlite3",
+        "old_version": "0003_approval_decisions",
+        "new_version": "0011_sessions",
+        "preserved_tasks": 3
+      },
+      {
+        "source": "m2-demo.sqlite3",
+        "old_version": "0006_coding_reports",
+        "new_version": "0011_sessions",
+        "preserved_tasks": 1
+      }
+    ],
+    "originals_modified": false
+  },
+  "references": "docs/evidence/harness-r3-references.json",
+  "paid_provider_calls_added": 0,
+  "checks": {
+    "ruff": "passed",
+    "format": "passed",
+    "uv_lock": "passed",
+    "public_evidence_secrets": "passed"
+  },
+  "remote_ci_executed": false,
+  "limits": [
+    "Deterministic UTF-8 byte budgeting, not exact tokenization or semantic memory",
+    "Explicit takeover of abandoned generations; no automatic lease/reaper/queue",
+    "Unconfirmed tool boundary requires review even if the call ledger has a result",
+    "Generation and Task revision fence checkpoint/state commits, not already-dispatched external effects",
+    "Snapshots contain private JSON; no at-rest encryption or public body download",
+    "Evaluation batches share Runtime but have no exposed checkpoint continuation endpoint",
+    "No streaming, parallel tools, general conversation branching or file rewind",
+    "Tests are synthetic development contracts, not production workload certification"
+  ]
+}

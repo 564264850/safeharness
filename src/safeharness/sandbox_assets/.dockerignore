@@ -1,0 +1,7 @@
+*
+!Dockerfile
+!requirements.txt
+!pytest.ini
+!*.py
+!verifier/
+!verifier/*.py

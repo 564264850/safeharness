@@ -1,0 +1,222 @@
+{
+  "date": "2026-11-14",
+  "stage": "S5-S7-scoped-durable-ticket-scheduling",
+  "status": "passed_scoped_gate",
+  "implementation_sha256": "15d924e6fd221316219f8fd51cc04a702a0db06c2e0ce7808c5c4ea2da553567",
+  "migration_head": "0017_queued_approvals",
+  "supported_queued": {
+    "provider": "scripted",
+    "execution_mode": "queued",
+    "scenarios": [
+      "ticket_read",
+      "ticket_update",
+      "ticket_update_read"
+    ]
+  },
+  "regression": {
+    "tests": 483,
+    "passed": true,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "xml": "artifacts/scheduler-final-regression.xml",
+    "docker_enabled": true,
+    "postgres_enabled": true,
+    "final_expanded_run": "passed",
+    "new_cases_since_S4": 42
+  },
+  "acceptance": {
+    "passed": true,
+    "instances": 120,
+    "report": "artifacts\\m4-acceptance\\a2e94928-9100-45c1-9f76-89430b1a971b\\report.json",
+    "dataset": "m4-development-v1",
+    "holdout": false,
+    "status": "passed"
+  },
+  "old_process_release": {
+    "report": "artifacts/recovery-demos/6959009d-906c-48ee-b820-1c98a53a6289/report.json",
+    "named_window": "after_tool checkpoint, heartbeat stopped, replacement completes, old process gate released",
+    "system_level_process_suspend": false,
+    "old_result": "lease_lost/ownership_changed"
+  },
+  "queued_approval_demo": {
+    "report": "artifacts/queued-approval-demos/96aa9f91-0a5b-4ec3-aa76-b72e544ebbd7/report.json",
+    "synthetic_reviewer": true,
+    "business_writes": 1,
+    "manual_resume_calls": 0
+  },
+  "http_business": {
+    "real_TCP": true,
+    "cases": [
+      "commit_then_connection_close_receipt_confirmed",
+      "commit_then_receipt_missing",
+      "commit_then_receipt_endpoint_503"
+    ],
+    "blind_POST_retries": 0,
+    "limit": "Host-configured loopback mock with atomic idempotent receipts; not arbitrary third-party exactly-once"
+  },
+  "database_outage": {
+    "report": "artifacts\\database-outage-demos\\3e4f7b86e6d54101bc357c63c33d4049\\report.json",
+    "only_new_owned_container_stopped": true,
+    "cleanup_confirmed": true,
+    "ready_during_outage": 503,
+    "health_during_outage": 200,
+    "healthy_db_to_completion_seconds": 6.109,
+    "window": "saved safe checkpoint; no external write in flight",
+    "validated_after_consumer_fix": true
+  },
+  "repeat_fault_windows": {
+    "status": "passed",
+    "requested": 30,
+    "report": "artifacts/scheduler-fault-repeats/9a3314a2-c734-4634-ba8a-27d944ea2b54/report.json",
+    "completed": 30,
+    "test_instances": 240,
+    "named_windows": [
+      "old worker released after replacement completes",
+      "business committed before control receipt persisted",
+      "approval wake transaction rollback",
+      "two submitters competing for one capacity slot"
+    ],
+    "backends": [
+      "sqlite",
+      "postgres"
+    ],
+    "measured_seconds": 823.328
+  },
+  "soak": {
+    "status": "passed",
+    "requested_seconds": 3600,
+    "report": "artifacts\\scheduler-soak\\665b6912-5c18-4695-864e-1c00000c6c2c\\report.json",
+    "memory_companion": "artifacts\\scheduler-soak\\665b6912-5c18-4695-864e-1c00000c6c2c\\process-memory.json",
+    "kind": "one_hour_soak",
+    "measured_seconds": 3600.406,
+    "accepted": 1165,
+    "finished": 1165,
+    "worker_slots": [
+      1,
+      2,
+      4
+    ],
+    "business_writes": 291,
+    "business_receipts": 291,
+    "distinct_completed_operations": 291,
+    "duplicate_business_writes": 0,
+    "terminal_tasks": {
+      "CANCELLED": 291,
+      "FAILED": 291,
+      "SUCCEEDED": 583
+    },
+    "expired_claims_at_finish": 0,
+    "unconfirmed_attempts_at_finish": 0,
+    "latency_ms": {
+      "p50": 1812.0,
+      "p95": 5766.0
+    },
+    "observed_worker_lease_losses": [],
+    "automatic_recovery_count": 0,
+    "run_process_cleanup_confirmed": true,
+    "timing_includes_startup_and_drain": true,
+    "healthy_soak_has_no_injected_outages": true,
+    "registered_api_pid": "10516",
+    "memory_samples": 57,
+    "memory_limit": "Windows working sets for launcher+interpreter trees, sampled after start; shared pages double-counted; no leak proof"
+  },
+  "package": {
+    "wheel": "artifacts\\scheduler-final-package\\safeharness-0.1.0-py3-none-any.whl",
+    "sha256": "82e430fcf604d026a6efe9f9cd85021c84d40ce29d67fd595ef5d9d0cde253e4",
+    "python_files_match": 68,
+    "migration_0017_included": true,
+    "isolated_install_validated": true,
+    "source_archive": "artifacts/scheduler-final-package/safeharness-0.1.0.tar.gz"
+  },
+  "isolated_wheel_demos": {
+    "queued_approval": "artifacts/queued-approval-demos/4ada8a49-bb3d-4c91-ab4b-7007ded949d5/report.json",
+    "stale_worker": "artifacts/recovery-demos/340e25ca-3226-40b1-83b9-6c2c7c144640/report.json"
+  },
+  "compatibility_demos": {
+    "s1": "artifacts/scheduler-demos/94a96690-c184-440e-9bfe-f7d45fc84843/report.json",
+    "s2": "artifacts/queue-worker-demos/198c92f2-1963-42c2-af29-16e430039fe8/report.json",
+    "s3": "artifacts/lease-demos/1255c8cf-b313-4889-bef1-6ad661ac38b4/report.json",
+    "environment": "isolated final wheel, no editable source install",
+    "s4_s5": "artifacts/recovery-demos/6959009d-906c-48ee-b820-1c98a53a6289/report.json",
+    "current_isolated_wheel_all_scenarios_passed": true
+  },
+  "paid_api_calls": 0,
+  "paid_api_cost_cny": "0",
+  "lint": "ruff check and format passed",
+  "ci": "configured; remote workflow not run",
+  "corrections_during_validation": [
+    "S4 READY lease rejection was loosened by approval cleanup handling; restricted READY cleanup/renewal exception to approval mode and reran S4/S6 regression.",
+    "Database-outage demo initially used a dynamically reassigned Docker port; switched to an explicit random host port for restart. Failed run container was cleaned.",
+    "Actual soak found that a single fenced claim stopped the persistent consumer; changed loop to allow fresh claims and added cross-backend coverage, then restarted the one-hour gate.",
+    "Two legacy unfinished-task test doubles captured a pre-claim snapshot with no generation; refreshed snapshot at call time, preserved unfinished-task rejection assertion and reran full regression."
+  ],
+  "limits": [
+    "Queue supports deterministic ticket tasks only; paid DeepSeek and Coding use existing explicit run/recovery paths.",
+    "F19 queued Coding orphan-container recovery is not implemented.",
+    "Four fault windows repeated 30 times; no claim all 20 matrix windows had 30 repetitions.",
+    "Windows registered PID RSS can measure launchers; companion samples interpreter descendants separately and starts later.",
+    "No 24-hour soak, backup/restore, TLS/identity rotation or production certification.",
+    "NEEDS_REVIEW remains a durable stop without a full resolution UI.",
+    "Persistent consumer continues only after ending the fenced claim; startup/claim database errors still require process supervision."
+  ],
+  "aborted_experiments": [
+    "artifacts\\scheduler-soak\\ca9d902f-2479-4a8e-8b41-777816f36922\\aborted.json",
+    "artifacts\\scheduler-soak\\b48c726e-ca2b-4a12-ae3b-fcaf4c569248\\aborted.json"
+  ],
+  "pre_fix_regression": {
+    "xml": "artifacts/scheduler-pre-fix-regression.xml",
+    "failed": 16,
+    "reason": "S4 expected READY renewal rejection; fixed and validated separately"
+  },
+  "prior_implementation_sha256": "1d063ba9896e8a58de08374e6ba5fe8e6d61c5f1938804c4f8e225ecc38cdc6f",
+  "failed_soak": {
+    "report": "artifacts/scheduler-soak/67fe4c7d-543a-4688-bff2-1b7cbdf65762/report.json",
+    "measured_seconds": 2046.609,
+    "accepted": 639,
+    "finished_at_stop": 637,
+    "observed": "heartbeat_failed terminated persistent consumer; scanner had classified affected task safe_before_start",
+    "corrected": "Persistent consumer ends fenced claim and returns to fresh claim loop; once/drain keep exit code 1.",
+    "not_counted_as_one_hour_pass": true,
+    "worker_slots_actually_observed": [
+      1,
+      2
+    ],
+    "all_task_rows_retained": 639
+  },
+  "fixture_refresh_failure_xml": "artifacts/scheduler-pre-fixture-refresh.xml",
+  "real_consumer_fence_recovery": {
+    "report": "artifacts\\consumer-fencing-demos\\81a8db98-4915-4bc9-ac24-bf738e464009\\report.json",
+    "same_worker_process_alive": true,
+    "real_PostgreSQL_heartbeat_timeout": true,
+    "tasks_succeeded": 2,
+    "recovered_generation": 2,
+    "tool_calls_per_task": 1
+  },
+  "soak_workload_scope": {
+    "resource": "IT-001",
+    "approved_target_status": "open",
+    "provider": "scripted",
+    "submit_interval_seconds": 3,
+    "max_pending": 20,
+    "limits": "fixed resource/state; resource-version conflicts and throughput/SLA are not established"
+  },
+  "completed_at_utc": "2026-11-14T07:22:18.470056+00:00",
+  "secret_scan": {
+    "status": "passed",
+    "known_values_from_all_private_postgres_configs": true,
+    "public_report_scan_enabled": true
+  },
+  "evidence_sha256": {
+    "artifacts/scheduler-final-regression.xml": "c83bf0929f06ed66a820d7b66ecd7408fb80ef88de5a14a9d007e900832ec5fe",
+    "artifacts\\m4-acceptance\\a2e94928-9100-45c1-9f76-89430b1a971b\\report.json": "53c7302a064b96d5c55f92eb27d6417f1b4ee25fee23b64edd72cb7ba8448004",
+    "artifacts/scheduler-fault-repeats/9a3314a2-c734-4634-ba8a-27d944ea2b54/report.json": "f0275a4666a2b731921b8dcc1712ba4615fbb1a73f209ad34e78a45650411a48",
+    "artifacts\\scheduler-soak\\665b6912-5c18-4695-864e-1c00000c6c2c\\report.json": "e0c6a981a67acf24784d93cc1f3de9b38f4a5207a36fadab5adba289e0ed64a6",
+    "artifacts\\scheduler-soak\\665b6912-5c18-4695-864e-1c00000c6c2c\\process-memory.json": "0f0eb19810747f562b74a3e2d1a2d016be884525fa256467dde04741363872e4",
+    "artifacts\\database-outage-demos\\3e4f7b86e6d54101bc357c63c33d4049\\report.json": "e47810a224424c1a719d65c7b23c61ba1605018b0ebc8ba5384c6a28e47278fa",
+    "artifacts\\consumer-fencing-demos\\81a8db98-4915-4bc9-ac24-bf738e464009\\report.json": "4c419d98e55c1a770e8493fd3fa6b1cdc4778af090491b51c4694aab9dd63eae",
+    "artifacts/recovery-demos/6959009d-906c-48ee-b820-1c98a53a6289/report.json": "b9818ae161f9c0a0a9fc7dbd3883461eefee43cdde715361877a190097046410",
+    "artifacts/queued-approval-demos/4ada8a49-bb3d-4c91-ab4b-7007ded949d5/report.json": "ed2e1bf7ac0ca8bb2bbebfb0c9bb90cf9929b3a63ca01ebfec0720299a53b7e0",
+    "artifacts/recovery-demos/340e25ca-3226-40b1-83b9-6c2c7c144640/report.json": "73aef36abce37121c2429c31569d12a13ca9fdecff283d4f9cdf10f75c6fac20"
+  }
+}

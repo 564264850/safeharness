@@ -1,0 +1,86 @@
+{
+  "date": "2026-11-13",
+  "status": "passed",
+  "implementation_sha256": "c1ecd6680951d95b01beae5d80eeca23a37a87540cce54a8bee848ac28d517e7",
+  "regression": {
+    "tests": 298,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "xml": "artifacts/verifier-truth-regression.xml",
+    "docker_enabled": true,
+    "postgres_enabled": true,
+    "new_cases_since_r4": 15
+  },
+  "acceptance": {
+    "passed": true,
+    "instances": 120,
+    "report": "artifacts/m4-acceptance/f79f765e-05ff-4e88-a18a-7c9909e79450/report.json",
+    "dataset": "m4-development-v1",
+    "holdout": false
+  },
+  "paid_api_calls": 0,
+  "paid_api_cost_cny": "0",
+  "verifier": {
+    "version": "budgetbook-observations-v1",
+    "cases": 25,
+    "operations": 97,
+    "contract_sha256": "c6f2f1849793834f3f411b21de8b9b9711f6c329f433060c5d3ba955a719b890",
+    "expected_values_sent_to_sandbox": false,
+    "arbitrary_program_correctness_proven": false
+  },
+  "worker": {
+    "image_id": "sha256:90bc8b7d8f7cd3596e588082d69998bd334a89c1d945995b594ae17ac93fcda1",
+    "source_sha256": "f419a61f5e68ec1b73204a7c2aad132bd962947be25dc196f4bee19b7bd41c61",
+    "smoke": "all 12 isolation controls passed; cleanup confirmed"
+  },
+  "demo": {
+    "report": "artifacts/verifier-demos/e2bdf50d-e67e-4428-a6a3-a63cac088f58/report.json",
+    "passed": true,
+    "scenarios": [
+      {
+        "name": "genuine",
+        "development_code": "tests_passed",
+        "task_status": "SUCCEEDED",
+        "verification_code": "observation_contract_passed",
+        "cleanup_confirmed": true
+      },
+      {
+        "name": "early_exit",
+        "development_code": "tests_failed",
+        "task_status": "FAILED",
+        "verification_code": "observation_incomplete",
+        "cleanup_confirmed": true
+      },
+      {
+        "name": "forged_development_report",
+        "development_code": "tests_passed",
+        "task_status": "FAILED",
+        "verification_code": "observation_schema_error",
+        "cleanup_confirmed": true
+      }
+    ]
+  },
+  "production_script_integration": {
+    "report": "artifacts/verifier-demos/fc572b3c-5875-4ef8-b29b-109078deffa2/report.json",
+    "actual_components_function": true,
+    "transport": "scripted, no network calls",
+    "task_status": "SUCCEEDED",
+    "case_count": 25
+  },
+  "package": {
+    "wheel": "artifacts\\verifier-truth-package\\safeharness-0.1.0-py3-none-any.whl",
+    "sha256": "d0f97e3177214a1ea18b22abae262818d49fcc958790146ea7d8bd4e37e0e9f1",
+    "python_files_match": 57,
+    "sdist_contains_book_fixture_and_demo": true,
+    "isolated_wheel_demo": "artifacts/verifier-demos/70b4e39e-868e-447c-b86a-25af40aac534/report.json"
+  },
+  "lint": "ruff check and format passed",
+  "migration_head": "0012_approval_loop",
+  "ci": "configured; remote workflow not run",
+  "limitations": [
+    "Finite, public development contract; a targeted candidate may hardcode valid observations.",
+    "Development pytest telemetry is forgeable and never final authority.",
+    "New application types need trusted host contracts."
+  ]
+}

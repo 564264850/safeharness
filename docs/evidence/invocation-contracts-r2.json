@@ -1,0 +1,184 @@
+{
+  "scope": "R2 unified invocation contracts and submission idempotency",
+  "recorded_at": "2026-11-11T13:17:31+00:00",
+  "implementation_sha256": "7e16544ce205cc8a6b765f9dc8f79661635208df611765c74d2c8e54868b62f5",
+  "migration_head": "0010_invocations",
+  "regression": {
+    "tests": 239,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "new_since_r1": 23,
+    "junit": "artifacts/invocation-regression.xml",
+    "docker_enabled": true,
+    "postgres_enabled": true
+  },
+  "acceptance": {
+    "passed": true,
+    "tests": 120,
+    "report": "artifacts/m4-acceptance/8ae6b126-d8cc-45cc-8501-d4102d29ac86/report.json",
+    "groups": {
+      "coding": {
+        "expected_instances": 30,
+        "evidence_instances": 30,
+        "passed": 30,
+        "families": [
+          "chunks",
+          "clamp",
+          "median",
+          "merge_counts",
+          "normalize_tags",
+          "parse_bool",
+          "redact_tokens",
+          "retry_delay",
+          "safe_divide",
+          "unique_ordered"
+        ]
+      },
+      "it": {
+        "expected_instances": 30,
+        "evidence_instances": 30,
+        "passed": 30,
+        "families": [
+          "approve_execute",
+          "cancel",
+          "cross_owner",
+          "decision_replay",
+          "proposal",
+          "read",
+          "read_only",
+          "reject",
+          "scope_revoked",
+          "wrong_digest"
+        ]
+      },
+      "attack": {
+        "expected_instances": 40,
+        "evidence_instances": 40,
+        "passed": 40,
+        "families": [
+          "http_authority",
+          "indirect",
+          "path",
+          "schema_scope",
+          "unknown_tool"
+        ]
+      },
+      "fault": {
+        "expected_instances": 20,
+        "evidence_instances": 20,
+        "passed": 20,
+        "families": [
+          "after_business",
+          "after_intent",
+          "after_receipt",
+          "before_intent",
+          "cancelled",
+          "concurrent_replay",
+          "evidence_missing",
+          "expired",
+          "policy_changed",
+          "unapproved"
+        ]
+      }
+    },
+    "metrics": {
+      "attack_breach": {
+        "numerator": 0,
+        "denominator": 40,
+        "wilson95": [
+          0,
+          0.08762160119728664
+        ]
+      },
+      "legitimate_false_rejection": {
+        "numerator": 0,
+        "denominator": 117,
+        "unit": "authorized Gateway tool requests; expected read-only denials excluded",
+        "wilson95": [
+          0,
+          0.03178924566273338
+        ]
+      },
+      "recoverable_contract": {
+        "numerator": 10,
+        "denominator": 10,
+        "rate": 1.0,
+        "wilson95": [
+          0.7224672001371107,
+          0.9999999999999999
+        ]
+      },
+      "safe_stop_contracts": 10,
+      "needs_review": 2,
+      "duplicate_business_writes": 0,
+      "latency_ms": {
+        "p50": 225.694,
+        "p95": 8543.606
+      },
+      "unknown_or_failed": 0
+    }
+  },
+  "submission": {
+    "key_scope": "owner_id + SHA256(key)",
+    "outcomes": [
+      201,
+      200,
+      409
+    ],
+    "same_key_concurrent_workers": [
+      "SQLite threads",
+      "PostgreSQL threads",
+      "two independent PostgreSQL HTTP processes"
+    ]
+  },
+  "real_process_recovery_demo": {
+    "report": "artifacts/invocation-demos/d30dddc1-e66d-4005-b93d-4ea2892ba644/report.json",
+    "process_exit": 77,
+    "runs": 2,
+    "calls": 1,
+    "attempts": 3,
+    "business_write_count": 1
+  },
+  "migration_backups": {
+    "report": "artifacts/m4-migrations/b6eef9ac-4685-40bb-9c98-ddab9be3736b/report.json",
+    "results": [
+      {
+        "source": "tasks.sqlite3",
+        "old_version": "0003_approval_decisions",
+        "new_version": "0010_invocations",
+        "preserved_tasks": 3
+      },
+      {
+        "source": "m2-demo.sqlite3",
+        "old_version": "0006_coding_reports",
+        "new_version": "0010_invocations",
+        "preserved_tasks": 1
+      }
+    ],
+    "originals_modified": false,
+    "historical_identity_fabricated": false
+  },
+  "package": {
+    "source_matches_wheel": true,
+    "source_python_files": 48,
+    "wheel_sha256": "f33262a0292103acf2f8e37dcd8c3c738262000bea57709e4841801960dfa363",
+    "isolated_wheel_demo_passed": true,
+    "wheel": "artifacts/invocation-package/safeharness-0.1.0-py3-none-any.whl"
+  },
+  "paid_provider_calls_added": 0,
+  "checks": {
+    "ruff": "passed",
+    "format": "passed",
+    "uv_lock": "passed",
+    "public_evidence_secrets": "passed"
+  },
+  "limits": [
+    "In-memory loop without TaskStore has no durable ledger",
+    "Run represents an execution phase, not a worker lease",
+    "No general checkpoint/context reconstruction or restart reaper",
+    "Only ticket adapters have atomic business receipts; no arbitrary external API exactly-once guarantee",
+    "Private artifact bodies are stored in the database, not exposed through public invocation or trace endpoints",
+    "Fixed synthetic development set; not a production workload certification"
+  ]
+}

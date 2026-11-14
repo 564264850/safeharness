@@ -1,0 +1,114 @@
+{
+  "date": "2026-11-12",
+  "task_status": "SUCCEEDED",
+  "builds": [
+    {
+      "build_id": "fb0e9dc8-5e3a-4d85-971c-1d7c536f53f0",
+      "task_id": "427b05ce-934a-490d-9ca0-80251b85d610",
+      "task_status": "FAILED",
+      "error_code": "provider_budget_exhausted",
+      "usage": {
+        "budget_id": "m3-validation-v1",
+        "calls": 9,
+        "prompt_tokens": 36777,
+        "completion_tokens": 11900,
+        "cost_upper_cny": "0.168754",
+        "unknown_usage_calls": 0,
+        "limit_cny": "0.5",
+        "pricing_version": "deepseek-flash-peak-20261111"
+      },
+      "report": "artifacts/deepseek-builds/fb0e9dc8-5e3a-4d85-971c-1d7c536f53f0/report.json"
+    },
+    {
+      "build_id": "96afe172-e479-4cd8-b69a-9941afcb5251",
+      "task_id": "5d26aa84-1fa7-4d54-a486-598665d235ae",
+      "task_status": "FAILED",
+      "error_code": "context_budget_exhausted",
+      "usage": {
+        "budget_id": "deepseek-budgetbook-v1",
+        "calls": 7,
+        "prompt_tokens": 31137,
+        "completion_tokens": 10634,
+        "cost_upper_cny": "0.147346",
+        "unknown_usage_calls": 0,
+        "limit_cny": "0.5",
+        "pricing_version": "deepseek-flash-peak-20261111"
+      },
+      "report": "artifacts/deepseek-builds/96afe172-e479-4cd8-b69a-9941afcb5251/report.json"
+    },
+    {
+      "build_id": "0354f7be-a032-4155-97f7-c8d8729b1077",
+      "task_id": "785b1127-a5a4-45bc-9c48-c7e003df00c3",
+      "task_status": "FAILED",
+      "error_code": null,
+      "usage": {
+        "budget_id": "deepseek-budgetbook-repair-v1",
+        "calls": 8,
+        "prompt_tokens": 58014,
+        "completion_tokens": 7593,
+        "cost_upper_cny": "0.176772",
+        "unknown_usage_calls": 0,
+        "limit_cny": "0.35",
+        "pricing_version": "deepseek-flash-peak-20261111"
+      },
+      "report": "artifacts/deepseek-builds/0354f7be-a032-4155-97f7-c8d8729b1077/report.json"
+    },
+    {
+      "build_id": "acbfd88f-d27f-4c44-8a9b-05004586fb3a",
+      "task_id": "7b8aa880-e294-42d1-a25f-02c0d2ee5b43",
+      "task_status": "SUCCEEDED",
+      "error_code": null,
+      "usage": {
+        "budget_id": "deepseek-budgetbook-repair-v1",
+        "calls": 4,
+        "prompt_tokens": 10318,
+        "completion_tokens": 743,
+        "cost_upper_cny": "0.02658",
+        "unknown_usage_calls": 0,
+        "limit_cny": "0.35",
+        "pricing_version": "deepseek-flash-peak-20261111"
+      },
+      "report": "artifacts/deepseek-builds/acbfd88f-d27f-4c44-8a9b-05004586fb3a/report.json"
+    }
+  ],
+  "total_paid_calls": 28,
+  "total_cost_upper_cny": "0.519452",
+  "unknown_usage_calls": 0,
+  "delivered_tests": {
+    "ok": true,
+    "code": "tests_passed",
+    "value": {
+      "exit_code": 0,
+      "output": "..............................                                           [100%]\n30 passed in 0.58s\n"
+    },
+    "cleanup_confirmed": true
+  },
+  "browser": {
+    "url": "http://127.0.0.1:62764",
+    "process_id": 29076,
+    "verified": [
+      "add_synthetic_entry",
+      "invalid_amount_error",
+      "reload_persistence",
+      "category_filter_empty_state",
+      "reset"
+    ],
+    "screenshot": "artifacts/deepseek-builds/acbfd88f-d27f-4c44-8a9b-05004586fb3a/browser-demo.png"
+  },
+  "provenance": "apps/budgetbook/PROVENANCE.json",
+  "harness_regression": {
+    "tests": 251,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "selection": "not acceptance and not postgres",
+    "docker_enabled": true,
+    "xml": "artifacts/deepseek-program-regression.xml"
+  },
+  "checks": {
+    "ruff": "passed",
+    "format": "passed",
+    "secret_scan_files": 254,
+    "secret_findings": 0
+  }
+}

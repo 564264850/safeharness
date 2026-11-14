@@ -1,0 +1,153 @@
+{
+  "stage": "runtime-correctness-r1",
+  "implementation_sha256": "0a4327e1d9e6edb5bf3a76d8c100e4dead8b351a867276fcc98a6d7d109867d8",
+  "regression": {
+    "tests": "216",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0"
+  },
+  "targeted": {
+    "tests": "53",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0"
+  },
+  "acceptance": {
+    "batch_id": "8f9cad43-884f-4078-877f-869600c70404",
+    "passed": true,
+    "groups": {
+      "coding": {
+        "expected_instances": 30,
+        "evidence_instances": 30,
+        "passed": 30,
+        "families": [
+          "chunks",
+          "clamp",
+          "median",
+          "merge_counts",
+          "normalize_tags",
+          "parse_bool",
+          "redact_tokens",
+          "retry_delay",
+          "safe_divide",
+          "unique_ordered"
+        ]
+      },
+      "it": {
+        "expected_instances": 30,
+        "evidence_instances": 30,
+        "passed": 30,
+        "families": [
+          "approve_execute",
+          "cancel",
+          "cross_owner",
+          "decision_replay",
+          "proposal",
+          "read",
+          "read_only",
+          "reject",
+          "scope_revoked",
+          "wrong_digest"
+        ]
+      },
+      "attack": {
+        "expected_instances": 40,
+        "evidence_instances": 40,
+        "passed": 40,
+        "families": [
+          "http_authority",
+          "indirect",
+          "path",
+          "schema_scope",
+          "unknown_tool"
+        ]
+      },
+      "fault": {
+        "expected_instances": 20,
+        "evidence_instances": 20,
+        "passed": 20,
+        "families": [
+          "after_business",
+          "after_intent",
+          "after_receipt",
+          "before_intent",
+          "cancelled",
+          "concurrent_replay",
+          "evidence_missing",
+          "expired",
+          "policy_changed",
+          "unapproved"
+        ]
+      }
+    },
+    "metrics": {
+      "attack_breach": {
+        "numerator": 0,
+        "denominator": 40,
+        "wilson95": [
+          0,
+          0.08762160119728664
+        ]
+      },
+      "legitimate_false_rejection": {
+        "numerator": 0,
+        "denominator": 117,
+        "unit": "authorized Gateway tool requests; expected read-only denials excluded",
+        "wilson95": [
+          0,
+          0.03178924566273338
+        ]
+      },
+      "recoverable_contract": {
+        "numerator": 10,
+        "denominator": 10,
+        "rate": 1.0,
+        "wilson95": [
+          0.7224672001371107,
+          0.9999999999999999
+        ]
+      },
+      "safe_stop_contracts": 10,
+      "needs_review": 2,
+      "duplicate_business_writes": 0,
+      "latency_ms": {
+        "p50": 210.60750000000002,
+        "p95": 9295.063999999998
+      },
+      "unknown_or_failed": 0
+    }
+  },
+  "fault_demo": "artifacts/runtime-fault-demos/f024033f-54e0-4f5a-b04f-fe7965d9aa7f/report.json",
+  "new_regression_cases": 52,
+  "paid_provider_calls_added": 0,
+  "migration_head": "0009_service",
+  "limits": [
+    "Live-process Exception handling only; no SIGKILL/restart reaper",
+    "Cannot persist terminal state when storage is unavailable; explicit 503/nonzero exit",
+    "Context, durable queue/lease and general checkpoint recovery remain pending"
+  ],
+  "package_smoke": {
+    "passed": true,
+    "cases": [
+      {
+        "phase": "model",
+        "status": "FAILED",
+        "error": "model_adapter_error"
+      },
+      {
+        "phase": "verification",
+        "status": "FAILED",
+        "error": "verification_error"
+      },
+      {
+        "phase": "tool",
+        "status": "NEEDS_REVIEW",
+        "error": "tool_outcome_unknown"
+      }
+    ],
+    "source_matches_wheel": true,
+    "wheel_sha256": "a3f0a0ea615ee98ed8e9b136d12f8c3d2ec32a940a570ee65bcd3a85ccb779ba",
+    "sandbox_smoke": "passed"
+  }
+}

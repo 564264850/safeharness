@@ -1,0 +1,56 @@
+{
+  "date": "2026-11-12",
+  "paid_calls": 0,
+  "source_changed": false,
+  "initial_regression": {
+    "tests": 146,
+    "failures": 2,
+    "errors": 0,
+    "skipped": 0
+  },
+  "coding_rerun": {
+    "tests": 2,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "probes": {
+    "paid_calls": 0,
+    "approval_continuation": {
+      "task_id": "eab94c89-c206-4904-b591-43042055597b",
+      "before": "WAITING_APPROVAL",
+      "after": "SUCCEEDED",
+      "queued_actions_remaining": 1,
+      "verifier_calls": 0,
+      "recorded_tools": [
+        "update_ticket_status"
+      ],
+      "business_write_count": 1
+    },
+    "repeated_no_progress": {
+      "task_status": "FAILED",
+      "stop_reason": "step_limit",
+      "denied_calls": 4
+    },
+    "program_verifier_accounting": {
+      "independent_tests_passed": true,
+      "recorded_calls": [
+        "deepseek-flash",
+        "run_tests",
+        "deepseek-flash",
+        "write_file",
+        "deepseek-flash",
+        "run_tests",
+        "deepseek-flash"
+      ],
+      "hidden_verification_call_recorded": false
+    }
+  },
+  "business_crash_demo": "artifacts/invocation-demos/aa0d6dc5-001a-4ba7-8233-de80b3036a1b/report.json",
+  "unresolved": [
+    "approval_to_general_agent_continuation",
+    "new_program_verifier_not_in_invocation_ledger",
+    "no_progress_detection",
+    "intermittent_sandbox_preflight_failure_without_detailed_evidence"
+  ]
+}

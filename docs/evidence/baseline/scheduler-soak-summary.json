@@ -1,0 +1,38 @@
+{
+  "evidence_kind": "derived_summary",
+  "source_report_sha256": "e0c6a981a67acf24784d93cc1f3de9b38f4a5207a36fadab5adba289e0ed64a6",
+  "source_run_id": "665b6912-5c18-4695-864e-1c00000c6c2c",
+  "stage": "S7",
+  "passed": true,
+  "requested_seconds": 3600.0,
+  "measured_seconds": 3600.406,
+  "accepted": 1165,
+  "finished": 1165,
+  "worker_slots": [
+    1,
+    2,
+    4
+  ],
+  "business_writes": 291,
+  "business_receipts": 291,
+  "distinct_completed_operations": 291,
+  "duplicate_business_writes": 0,
+  "terminal_task_counts": {
+    "SUCCEEDED": 583,
+    "FAILED": 291,
+    "CANCELLED": 291
+  },
+  "latency_ms": {
+    "p50": 1812.0,
+    "p95": 5766.0
+  },
+  "submit_interval_seconds": 3.0,
+  "max_pending": 20,
+  "limitations": [
+    "Local deterministic workload; not a paid-model or coding scheduler benchmark",
+    "No database/process outage injected in this soak; named fault windows covered separately",
+    "Working-set samples are observations, not a leak proof",
+    "24-hour operation and backup/restore remain separate gates",
+    "summary omits host identifiers and detailed task snapshots; original report remains local"
+  ]
+}

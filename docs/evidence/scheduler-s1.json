@@ -1,0 +1,64 @@
+{
+  "date": "2026-11-13",
+  "stage": "S1-durable-submission",
+  "status": "passed",
+  "implementation_sha256": "6c2c2c22bb0c3a952f17c2676adc6b8e3db2672ab92a7faf2ad6b0b7c950bf6a",
+  "migration_head": "0013_durable_queue",
+  "existing_tasks_auto_enqueued": false,
+  "supported_queued_request": {
+    "scenario": "ticket_read",
+    "provider": "scripted",
+    "execution_mode": "queued"
+  },
+  "regression": {
+    "tests": 325,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "xml": "artifacts/durable-submission-regression.xml",
+    "docker_enabled": true,
+    "postgres_enabled": true,
+    "new_cases": 27,
+    "new_postgres_cases": 10
+  },
+  "acceptance": {
+    "passed": true,
+    "instances": 120,
+    "report": "artifacts/m4-acceptance/4e5a4883-adf6-4717-bbe8-bd2b3397d406/report.json",
+    "dataset": "m4-development-v1",
+    "holdout": false
+  },
+  "fault_checks": [
+    "process exit after queue INSERT before commit rolls everything back",
+    "process exit after commit preserves task and idempotency record",
+    "two real submitting processes produce one logical task and queue entry",
+    "queue/key/trace insertion failures roll back atomically",
+    "cancellation failure rolls back task and queue",
+    "HTTP response construction failure supports safe replay",
+    "old 0012 HTTP idempotency digest survives migration; old tasks remain manual"
+  ],
+  "http_demo": {
+    "report": "artifacts/scheduler-demos/4b35a029-1d73-476b-99d7-b96a916bb1ce/report.json",
+    "backend": "sqlite",
+    "actual_api_restart": true,
+    "task_status": "CREATED",
+    "queue_state": "QUEUED"
+  },
+  "manual_two_phase_demo": "artifacts/scheduler-demos/e9ee1bbf-9caf-4e6a-b0a0-06ad2e3b0d96/report.json",
+  "package": {
+    "wheel": "artifacts\\scheduler-s1-package\\safeharness-0.1.0-py3-none-any.whl",
+    "sha256": "372398f4d89fb4d232f755275f042038b4260a704e136870ac1e5e4194a02c17",
+    "python_files_match": 59,
+    "new_migration_included": true,
+    "isolated_wheel_demo": "artifacts/scheduler-demos/dc4630a6-0333-4305-9831-ed701bb12245/report.json"
+  },
+  "paid_api_calls": 0,
+  "paid_api_cost_cny": "0",
+  "lint": "ruff check and format passed",
+  "ci": "configured; remote workflow not run",
+  "pending": [
+    "S2 independent worker and atomic claims",
+    "S3 leases and heartbeats",
+    "S4-S7 automatic recovery, stale-worker fencing integration, approval wakeups and operational acceptance"
+  ]
+}

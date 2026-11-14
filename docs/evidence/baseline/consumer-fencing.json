@@ -1,0 +1,86 @@
+{
+  "stage": "S7-persistent-consumer-fence-recovery",
+  "passed": true,
+  "source_fingerprint": "15d924e6fd221316219f8fd51cc04a702a0db06c2e0ce7808c5c4ea2da553567",
+  "paid_api_calls": 0,
+  "worker_pid": 36292,
+  "scanner_pid": 35184,
+  "same_persistent_worker_stayed_alive": true,
+  "real_pg_heartbeat_timeout": true,
+  "fault_window": "after claim, before task start, queue row locked until heartbeat fence",
+  "lost_task_id": "ccb1123b-0f23-412f-9fda-1d0ee3705dfd",
+  "lease_losses": [
+    {
+      "status": "lease_lost",
+      "worker_id": "persistent-fence-demo",
+      "code": "heartbeat_failed",
+      "task_id": "ccb1123b-0f23-412f-9fda-1d0ee3705dfd",
+      "task_status": "CREATED",
+      "revision": 0,
+      "scheduling": {
+        "mode": "queued",
+        "schema_version": 1,
+        "state": "CLAIMED",
+        "created_at": "2026-11-14T06:38:31.668+00:00",
+        "generation": 1,
+        "claimed_by": "persistent-fence-demo",
+        "claimed_at": "2026-11-14T06:38:34.732+00:00",
+        "execution_deadline_at": 1794638434.735465,
+        "lease_seconds": 1.5,
+        "last_heartbeat_at": 1794638314.783801,
+        "lease_expires_at": 1794638316.283803,
+        "heartbeat_count": 1,
+        "lease_status": "ACTIVE"
+      }
+    }
+  ],
+  "tasks": [
+    {
+      "task_id": "ccb1123b-0f23-412f-9fda-1d0ee3705dfd",
+      "status": "SUCCEEDED",
+      "scheduling": {
+        "mode": "queued",
+        "schema_version": 1,
+        "state": "FINISHED",
+        "created_at": "2026-11-14T06:38:31.668+00:00",
+        "generation": 2,
+        "claimed_by": "persistent-fence-demo",
+        "claimed_at": "2026-11-14T06:38:38.102+00:00",
+        "finished_at": "2026-11-14T06:38:40.980+00:00",
+        "recovery_count": 1,
+        "recovery_mode": "start",
+        "recovery_code": "safe_before_start",
+        "execution_deadline_at": 1794638434.735465,
+        "lease_seconds": 1.5,
+        "last_heartbeat_at": 1794638320.798508,
+        "lease_expires_at": 1794638322.29851,
+        "heartbeat_count": 14,
+        "lease_status": "RELEASED"
+      },
+      "calls": 1
+    },
+    {
+      "task_id": "3e035d98-8054-4453-bddb-8abc3664ccc9",
+      "status": "SUCCEEDED",
+      "scheduling": {
+        "mode": "queued",
+        "schema_version": 1,
+        "state": "FINISHED",
+        "created_at": "2026-11-14T06:38:31.732+00:00",
+        "generation": 1,
+        "claimed_by": "persistent-fence-demo",
+        "claimed_at": "2026-11-14T06:38:36.211+00:00",
+        "finished_at": "2026-11-14T06:38:37.330+00:00",
+        "execution_deadline_at": 1794638436.2148,
+        "lease_seconds": 1.5,
+        "last_heartbeat_at": 1794638317.261795,
+        "lease_expires_at": 1794638318.761796,
+        "heartbeat_count": 8,
+        "lease_status": "RELEASED"
+      },
+      "calls": 1
+    }
+  ],
+  "business_writes": 0,
+  "retained_schema": "sh_consumer_627b282ede9743bb99f3207144df8044"
+}

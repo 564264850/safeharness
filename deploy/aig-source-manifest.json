@@ -1,0 +1,998 @@
+{
+  "repository": "Tencent/AI-Infra-Guard",
+  "commit": "acddd07bfcab5c0c4a6eeefa487164ba34261c39",
+  "files": [
+    {
+      "path": "LICENSE",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "00c94292fbc75f2fa7fcbc3f482270b69ccee602",
+      "size": 11362,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/00c94292fbc75f2fa7fcbc3f482270b69ccee602"
+    },
+    {
+      "path": "NOTICE",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "10016100a50031f0ddcaa930d20fc1439e01c8d0",
+      "size": 618,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/10016100a50031f0ddcaa930d20fc1439e01c8d0"
+    },
+    {
+      "path": "agent-scan/README.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "741fdcab7979059960b8d7942e1940adbba46346",
+      "size": 11963,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/741fdcab7979059960b8d7942e1940adbba46346"
+    },
+    {
+      "path": "agent-scan/README_zh.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "1301b7cb646c3e4d643a12cdb67a1bcac3f1199b",
+      "size": 11366,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/1301b7cb646c3e4d643a12cdb67a1bcac3f1199b"
+    },
+    {
+      "path": "agent-scan/USAGE.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "9b5ab9eab9865c88fd0ee0ee2a05383cf40c4541",
+      "size": 2685,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/9b5ab9eab9865c88fd0ee0ee2a05383cf40c4541"
+    },
+    {
+      "path": "agent-scan/USAGE_zh.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "9c8648d6ab80e4de71639f019967daef604a91bb",
+      "size": 2623,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/9c8648d6ab80e4de71639f019967daef604a91bb"
+    },
+    {
+      "path": "agent-scan/agent_scan/__init__.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "555d1f00d8aa23901a0857810a5f1c20e172b029",
+      "size": 496,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/555d1f00d8aa23901a0857810a5f1c20e172b029"
+    },
+    {
+      "path": "agent-scan/agent_scan/__main__.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8338d0f2417b7980f8657dde0bf1a450696b523b",
+      "size": 70,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/8338d0f2417b7980f8657dde0bf1a450696b523b"
+    },
+    {
+      "path": "agent-scan/agent_scan/config/provider_config_en.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "bd8a21b8d5201fd88179ac47f96e770c80efd8f8",
+      "size": 7735,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/bd8a21b8d5201fd88179ac47f96e770c80efd8f8"
+    },
+    {
+      "path": "agent-scan/agent_scan/config/provider_config_zh.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "aa85413e2cfd206f3b1227bb446cf37d4c3ad8c8",
+      "size": 7498,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/aa85413e2cfd206f3b1227bb446cf37d4c3ad8c8"
+    },
+    {
+      "path": "agent-scan/agent_scan/core/__init__.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "30af5f9989e1473351d8be8d0b13736d5566f123",
+      "size": 831,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/30af5f9989e1473351d8be8d0b13736d5566f123"
+    },
+    {
+      "path": "agent-scan/agent_scan/core/agent.py",
+      "mode": "100755",
+      "type": "blob",
+      "sha": "5e88184e26a71a574ef71abbf772f679bd35c91f",
+      "size": 18791,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/5e88184e26a71a574ef71abbf772f679bd35c91f"
+    },
+    {
+      "path": "agent-scan/agent_scan/core/agent_adapter/__init__.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "30af5f9989e1473351d8be8d0b13736d5566f123",
+      "size": 831,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/30af5f9989e1473351d8be8d0b13736d5566f123"
+    },
+    {
+      "path": "agent-scan/agent_scan/core/agent_adapter/adapter.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "856ee264ced9c8dc9d93ad662436dc1cf028d262",
+      "size": 67823,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/856ee264ced9c8dc9d93ad662436dc1cf028d262"
+    },
+    {
+      "path": "agent-scan/agent_scan/core/agent_adapter/connectivity.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "73203026e2337c34ddd4fce3ae382ef0c334a386",
+      "size": 1092,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/73203026e2337c34ddd4fce3ae382ef0c334a386"
+    },
+    {
+      "path": "agent-scan/agent_scan/core/agent_adapter/connectivity_schema.xml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3bc8b69ae3d2187f07b599482070818d9b5beb86",
+      "size": 1167,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/3bc8b69ae3d2187f07b599482070818d9b5beb86"
+    },
+    {
+      "path": "agent-scan/agent_scan/core/agent_adapter/providers.yaml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "664658c8f37a3721b0b107f52d89d3008ba8927d",
+      "size": 6733,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/664658c8f37a3721b0b107f52d89d3008ba8927d"
+    },
+    {
+      "path": "agent-scan/agent_scan/core/base_agent.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "89d96d37736eb90e7602f3abc61f8d8c764080a7",
+      "size": 16079,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/89d96d37736eb90e7602f3abc61f8d8c764080a7"
+    },
+    {
+      "path": "agent-scan/agent_scan/core/report/__init__.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e4b249c1818ee27f5b0f2f648645083632634528",
+      "size": 1369,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/e4b249c1818ee27f5b0f2f648645083632634528"
+    },
+    {
+      "path": "agent-scan/agent_scan/core/report/models.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b73c13f6269a739af14ebdbca4daad147aa48ec3",
+      "size": 3035,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/b73c13f6269a739af14ebdbca4daad147aa48ec3"
+    },
+    {
+      "path": "agent-scan/agent_scan/core/report/report.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "4874be6619dcbea6220477b298be62fec563b9a6",
+      "size": 12141,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/4874be6619dcbea6220477b298be62fec563b9a6"
+    },
+    {
+      "path": "agent-scan/agent_scan/main.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "c09a5daaef40125ede12ac144faac1f94707ef3c",
+      "size": 9135,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/c09a5daaef40125ede12ac144faac1f94707ef3c"
+    },
+    {
+      "path": "agent-scan/agent_scan/prompt/skills/.gitkeep",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "size": 0,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "agent-scan/agent_scan/prompt/skills/agentic-supply-chain-detection/SKILL.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "29a95a58950f505253943585f9557c627e3679df",
+      "size": 3037,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/29a95a58950f505253943585f9557c627e3679df"
+    },
+    {
+      "path": "agent-scan/agent_scan/prompt/skills/authorization-bypass-detection/SKILL.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "c857d5a650fb70501f989e335c1474299f9fc93c",
+      "size": 3065,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/c857d5a650fb70501f989e335c1474299f9fc93c"
+    },
+    {
+      "path": "agent-scan/agent_scan/prompt/skills/cascading-failure-detection/SKILL.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "af823743495ebfd1a0aeb8a20e4aaef8497605ae",
+      "size": 2369,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/af823743495ebfd1a0aeb8a20e4aaef8497605ae"
+    },
+    {
+      "path": "agent-scan/agent_scan/prompt/skills/data-leakage-detection/SKILL.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "4e20cf761d336c5848fa306b0139ad3120cd4ef5",
+      "size": 3838,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/4e20cf761d336c5848fa306b0139ad3120cd4ef5"
+    },
+    {
+      "path": "agent-scan/agent_scan/prompt/skills/direct-injection-detection/SKILL.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ac4905a25d97773043c4d355aef0d7f497cb8a7d",
+      "size": 2520,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/ac4905a25d97773043c4d355aef0d7f497cb8a7d"
+    },
+    {
+      "path": "agent-scan/agent_scan/prompt/skills/file-path-traversal-detection/SKILL.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "c38bdf67ab15b624e6b328678ecfdc43a0af6583",
+      "size": 3159,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/c38bdf67ab15b624e6b328678ecfdc43a0af6583"
+    },
+    {
+      "path": "agent-scan/agent_scan/prompt/skills/hardcoded-secret-detection/SKILL.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "21572091414a426e72c435919dbd6f63aac3f9da",
+      "size": 3400,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/21572091414a426e72c435919dbd6f63aac3f9da"
+    },
+    {
+      "path": "agent-scan/agent_scan/prompt/skills/human-agent-trust-exploit-detection/SKILL.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "142228a3930431367394bfa8f517b3f25123faf0",
+      "size": 3125,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/142228a3930431367394bfa8f517b3f25123faf0"
+    },
+    {
+      "path": "agent-scan/agent_scan/prompt/skills/indirect-injection-detection/SKILL.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "358b15423716f2da17b9dd45e34d181e41c95516",
+      "size": 4478,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/358b15423716f2da17b9dd45e34d181e41c95516"
+    },
+    {
+      "path": "agent-scan/agent_scan/prompt/skills/inter-agent-comm-security-detection/SKILL.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "f815c4e559301626eb8b77ac68d7806139cd73b5",
+      "size": 2637,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/f815c4e559301626eb8b77ac68d7806139cd73b5"
+    },
+    {
+      "path": "agent-scan/agent_scan/prompt/skills/memory-poisoning-detection/SKILL.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "280cf306d4db577405f14628be933f4b781d9ad7",
+      "size": 3167,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/280cf306d4db577405f14628be933f4b781d9ad7"
+    },
+    {
+      "path": "agent-scan/agent_scan/prompt/skills/memory-rag-poisoning-detection/SKILL.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "f1cf145e7c116e9a35aa837e7fbcfca810cc346a",
+      "size": 9647,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/f1cf145e7c116e9a35aa837e7fbcfca810cc346a"
+    },
+    {
+      "path": "agent-scan/agent_scan/prompt/skills/owasp-asi/SKILL.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "9533ca893627d7599e2d37d4dccb049868a46432",
+      "size": 3605,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/9533ca893627d7599e2d37d4dccb049868a46432"
+    },
+    {
+      "path": "agent-scan/agent_scan/prompt/skills/tool-abuse-detection/SKILL.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "cfa655a6ea89b2d6393e27a1a931d23908945b8c",
+      "size": 6139,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/cfa655a6ea89b2d6393e27a1a931d23908945b8c"
+    },
+    {
+      "path": "agent-scan/agent_scan/prompt/skills/unexpected-code-execution-detection/SKILL.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d45553b7e45f463e5f2a486cb2a5092c267bea92",
+      "size": 2377,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/d45553b7e45f463e5f2a486cb2a5092c267bea92"
+    },
+    {
+      "path": "agent-scan/agent_scan/prompt/skills/web-exfiltration-detection/SKILL.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ee5257020f14ef0aaf7c8d85260ee1af0f32ffd4",
+      "size": 7179,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/ee5257020f14ef0aaf7c8d85260ee1af0f32ffd4"
+    },
+    {
+      "path": "agent-scan/agent_scan/prompt/system/agent_security_reviewer.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a899daf2c6188095136f105fa55896c6334056af",
+      "size": 10210,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/a899daf2c6188095136f105fa55896c6334056af"
+    },
+    {
+      "path": "agent-scan/agent_scan/prompt/system/agent_vulnerability_detector.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "4c12b1041fe1fc644dd5210d04a5b239777f918e",
+      "size": 8295,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/4c12b1041fe1fc644dd5210d04a5b239777f918e"
+    },
+    {
+      "path": "agent-scan/agent_scan/prompt/system/agents/build_preview.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "0800467e086ba05e9c112a38a8fbe7304e22eeaf",
+      "size": 5368,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/0800467e086ba05e9c112a38a8fbe7304e22eeaf"
+    },
+    {
+      "path": "agent-scan/agent_scan/prompt/system/agents/code_audit.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "959991e1b4326bab790a04fc02afab571e961858",
+      "size": 9817,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/959991e1b4326bab790a04fc02afab571e961858"
+    },
+    {
+      "path": "agent-scan/agent_scan/prompt/system/agents/dynamic/general_analyzing_prompt_template.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d17a3d85619c52d8a75419179ee18ef36d101ed5",
+      "size": 5115,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/d17a3d85619c52d8a75419179ee18ef36d101ed5"
+    },
+    {
+      "path": "agent-scan/agent_scan/prompt/system/agents/dynamic/malicious_behaviour_testing.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "fe6da9aa3cec8fc41f958ea36ab286be46b1f7e2",
+      "size": 6587,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/fe6da9aa3cec8fc41f958ea36ab286be46b1f7e2"
+    },
+    {
+      "path": "agent-scan/agent_scan/prompt/system/agents/dynamic/project_summary.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "44a8a150d3df1d1988b7b6fb0a033f4169580bc8",
+      "size": 3503,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/44a8a150d3df1d1988b7b6fb0a033f4169580bc8"
+    },
+    {
+      "path": "agent-scan/agent_scan/prompt/system/agents/dynamic/system_prompt.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "bf8831e9f7eb9bf09d6d0882169342f577274649",
+      "size": 416,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/bf8831e9f7eb9bf09d6d0882169342f577274649"
+    },
+    {
+      "path": "agent-scan/agent_scan/prompt/system/agents/dynamic/vulnerability_testing.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e049a49f9883f6c36abb28cf9374bd273309e026",
+      "size": 14428,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/e049a49f9883f6c36abb28cf9374bd273309e026"
+    },
+    {
+      "path": "agent-scan/agent_scan/prompt/system/agents/dynamic_verification.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "f4432d3e5e2a9998f79dfb1257668899ffab94f6",
+      "size": 6212,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/f4432d3e5e2a9998f79dfb1257668899ffab94f6"
+    },
+    {
+      "path": "agent-scan/agent_scan/prompt/system/agents/mcp_opera.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "333947176210f3feacd3958db1df26ce720073a0",
+      "size": 4981,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/333947176210f3feacd3958db1df26ce720073a0"
+    },
+    {
+      "path": "agent-scan/agent_scan/prompt/system/agents/vuln_review.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "cb4ec8acb05a0b4850404d4095d59e2b7e508c5f",
+      "size": 12679,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/cb4ec8acb05a0b4850404d4095d59e2b7e508c5f"
+    },
+    {
+      "path": "agent-scan/agent_scan/prompt/system/compact.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "98a9cd81172d4c767a56d6a4e36cb1e1aa09f812",
+      "size": 2505,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/98a9cd81172d4c767a56d6a4e36cb1e1aa09f812"
+    },
+    {
+      "path": "agent-scan/agent_scan/prompt/system/format_report.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3bea336a32e6ea18c418531a046a848ab0bcc4c3",
+      "size": 990,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/3bea336a32e6ea18c418531a046a848ab0bcc4c3"
+    },
+    {
+      "path": "agent-scan/agent_scan/prompt/system/main.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "fb79b90f3a9b70f31c1efac5b527c2f42521f271",
+      "size": 2541,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/fb79b90f3a9b70f31c1efac5b527c2f42521f271"
+    },
+    {
+      "path": "agent-scan/agent_scan/prompt/system/next_prompt.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "2fff3527e6089220c98f4bad9e5365d64b073098",
+      "size": 185,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/2fff3527e6089220c98f4bad9e5365d64b073098"
+    },
+    {
+      "path": "agent-scan/agent_scan/prompt/system/project_summary.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "264858c40c71705f6ad0adfd98ba319145b8ab00",
+      "size": 7134,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/264858c40c71705f6ad0adfd98ba319145b8ab00"
+    },
+    {
+      "path": "agent-scan/agent_scan/prompt/system/skill_runner.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "48f582a57eda232e2e3bf9b35cfce59be2277920",
+      "size": 4759,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/48f582a57eda232e2e3bf9b35cfce59be2277920"
+    },
+    {
+      "path": "agent-scan/agent_scan/prompt/system/system_prompt.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "0ca3ef68229c5a8792d43ddc3df0279e980c1ff3",
+      "size": 6982,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/0ca3ef68229c5a8792d43ddc3df0279e980c1ff3"
+    },
+    {
+      "path": "agent-scan/agent_scan/py.typed",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "size": 0,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "agent-scan/agent_scan/tools/__init__.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "f52b96f50ab30f482f5cbd1026a70259cc0f3d2c",
+      "size": 1595,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/f52b96f50ab30f482f5cbd1026a70259cc0f3d2c"
+    },
+    {
+      "path": "agent-scan/agent_scan/tools/batch/__init__.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "348ba4cfd20134c2a8ea6027ac05e962dbced304",
+      "size": 880,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/348ba4cfd20134c2a8ea6027ac05e962dbced304"
+    },
+    {
+      "path": "agent-scan/agent_scan/tools/batch/batch.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "5891dd0616f9a6a522f19b43e92411d8e288dace",
+      "size": 5692,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/5891dd0616f9a6a522f19b43e92411d8e288dace"
+    },
+    {
+      "path": "agent-scan/agent_scan/tools/batch/batch_schema.xml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "095a89821aba1c15690075ceaa40b3a9bab1abcd",
+      "size": 1398,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/095a89821aba1c15690075ceaa40b3a9bab1abcd"
+    },
+    {
+      "path": "agent-scan/agent_scan/tools/dialogue/__init__.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a35d53296cacabcfbd35f761a5a103b0274ba99d",
+      "size": 881,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/a35d53296cacabcfbd35f761a5a103b0274ba99d"
+    },
+    {
+      "path": "agent-scan/agent_scan/tools/dialogue/dialogue.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "c13ce9e961f4a5d12b706f0dd2e03423093f007f",
+      "size": 3069,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/c13ce9e961f4a5d12b706f0dd2e03423093f007f"
+    },
+    {
+      "path": "agent-scan/agent_scan/tools/dialogue/dialogue_schema.xml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "55b30e2e6de0f1ef65a0251df59aa2e3e7c1737d",
+      "size": 633,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/55b30e2e6de0f1ef65a0251df59aa2e3e7c1737d"
+    },
+    {
+      "path": "agent-scan/agent_scan/tools/dialogue/scan.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "f7b055a34b0e12466d72984c120f404fc21f39a8",
+      "size": 13670,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/f7b055a34b0e12466d72984c120f404fc21f39a8"
+    },
+    {
+      "path": "agent-scan/agent_scan/tools/dialogue/scan_schema.xml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "897f175b0e9678431df2739c3625d2730fd2d6c5",
+      "size": 3252,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/897f175b0e9678431df2739c3625d2730fd2d6c5"
+    },
+    {
+      "path": "agent-scan/agent_scan/tools/dispatcher.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e15438ed25368dd8c1ecadbf74264be7bf80d5d4",
+      "size": 2326,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/e15438ed25368dd8c1ecadbf74264be7bf80d5d4"
+    },
+    {
+      "path": "agent-scan/agent_scan/tools/finish/__init__.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "348ba4cfd20134c2a8ea6027ac05e962dbced304",
+      "size": 880,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/348ba4cfd20134c2a8ea6027ac05e962dbced304"
+    },
+    {
+      "path": "agent-scan/agent_scan/tools/finish/finish_actions.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "12a19fa8d14af3c02669e5b590ab4a9e4a05938d",
+      "size": 1364,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/12a19fa8d14af3c02669e5b590ab4a9e4a05938d"
+    },
+    {
+      "path": "agent-scan/agent_scan/tools/finish/finish_actions_schema.xml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "39cff0bbca7ada670dd8e823122e7102fc5ec400",
+      "size": 556,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/39cff0bbca7ada670dd8e823122e7102fc5ec400"
+    },
+    {
+      "path": "agent-scan/agent_scan/tools/registry.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "4c4970969d8f10c4eea1dacba5f1dbf64b0786de",
+      "size": 6022,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/4c4970969d8f10c4eea1dacba5f1dbf64b0786de"
+    },
+    {
+      "path": "agent-scan/agent_scan/tools/skill/__init__.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "348ba4cfd20134c2a8ea6027ac05e962dbced304",
+      "size": 880,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/348ba4cfd20134c2a8ea6027ac05e962dbced304"
+    },
+    {
+      "path": "agent-scan/agent_scan/tools/skill/skill.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b99a2c009d24e8e893decd03b543db89ebbacfdf",
+      "size": 5849,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/b99a2c009d24e8e893decd03b543db89ebbacfdf"
+    },
+    {
+      "path": "agent-scan/agent_scan/tools/skill/skill_schema.xml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "5a2b67033cc972eb0baab0e1de03f4539667a0b7",
+      "size": 2015,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/5a2b67033cc972eb0baab0e1de03f4539667a0b7"
+    },
+    {
+      "path": "agent-scan/agent_scan/tools/task/__init__.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "348ba4cfd20134c2a8ea6027ac05e962dbced304",
+      "size": 880,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/348ba4cfd20134c2a8ea6027ac05e962dbced304"
+    },
+    {
+      "path": "agent-scan/agent_scan/tools/task/task.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "06fea1cc807269c634c336a24694c8c59e592ad2",
+      "size": 7139,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/06fea1cc807269c634c336a24694c8c59e592ad2"
+    },
+    {
+      "path": "agent-scan/agent_scan/tools/task/task_schema.xml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "39a29cecd89da5e5984cc68c44a5adaf35439f5d",
+      "size": 1853,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/39a29cecd89da5e5984cc68c44a5adaf35439f5d"
+    },
+    {
+      "path": "agent-scan/agent_scan/tools/test_dispatcher.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "118c1c82ac00df05c022bdf586eaa170d848f31d",
+      "size": 3211,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/118c1c82ac00df05c022bdf586eaa170d848f31d"
+    },
+    {
+      "path": "agent-scan/agent_scan/tools/thinking/__init__.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "348ba4cfd20134c2a8ea6027ac05e962dbced304",
+      "size": 880,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/348ba4cfd20134c2a8ea6027ac05e962dbced304"
+    },
+    {
+      "path": "agent-scan/agent_scan/tools/thinking/thinking_actions.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ef6722ccdb1662cf66cfde202040cf3816b8f88e",
+      "size": 3080,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/ef6722ccdb1662cf66cfde202040cf3816b8f88e"
+    },
+    {
+      "path": "agent-scan/agent_scan/tools/thinking/thinking_actions_schema.xml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "cc9dccfbf82fcb9920792ec5d1ddc80bef35ac9a",
+      "size": 3902,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/cc9dccfbf82fcb9920792ec5d1ddc80bef35ac9a"
+    },
+    {
+      "path": "agent-scan/agent_scan/utils/__init__.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "30af5f9989e1473351d8be8d0b13736d5566f123",
+      "size": 831,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/30af5f9989e1473351d8be8d0b13736d5566f123"
+    },
+    {
+      "path": "agent-scan/agent_scan/utils/aig_logger.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "897da404dadb3b385e7fd47056246e6935655a16",
+      "size": 5179,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/897da404dadb3b385e7fd47056246e6935655a16"
+    },
+    {
+      "path": "agent-scan/agent_scan/utils/config.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d7eb14c0d6ec7f1438306d44c188359bccb9f4be",
+      "size": 2536,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/d7eb14c0d6ec7f1438306d44c188359bccb9f4be"
+    },
+    {
+      "path": "agent-scan/agent_scan/utils/extract_vuln.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "79531e7b8be15f431a201af9ac9c621f1a234a42",
+      "size": 8359,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/79531e7b8be15f431a201af9ac9c621f1a234a42"
+    },
+    {
+      "path": "agent-scan/agent_scan/utils/file_utils.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "bcaf49a40829da488adefbf703f9c3730b9560c2",
+      "size": 9826,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/bcaf49a40829da488adefbf703f9c3730b9560c2"
+    },
+    {
+      "path": "agent-scan/agent_scan/utils/llm.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3cb62add2fbb80a2fa13b4543f8b3ed2ce46725c",
+      "size": 8572,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/3cb62add2fbb80a2fa13b4543f8b3ed2ce46725c"
+    },
+    {
+      "path": "agent-scan/agent_scan/utils/llm_manager.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "2751386bf5591fea177616b1cce7b1deaeba7bea",
+      "size": 8459,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/2751386bf5591fea177616b1cce7b1deaeba7bea"
+    },
+    {
+      "path": "agent-scan/agent_scan/utils/logging.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ce0410606039985b33cffb6d527580641ff6e206",
+      "size": 1771,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/ce0410606039985b33cffb6d527580641ff6e206"
+    },
+    {
+      "path": "agent-scan/agent_scan/utils/parse.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "994eb2c2b858ed2521e74d83cb411871ae6ec128",
+      "size": 14047,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/994eb2c2b858ed2521e74d83cb411871ae6ec128"
+    },
+    {
+      "path": "agent-scan/agent_scan/utils/path_utils.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "69904b0696b7cd874f7851427ef7e0d551f6f272",
+      "size": 4631,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/69904b0696b7cd874f7851427ef7e0d551f6f272"
+    },
+    {
+      "path": "agent-scan/agent_scan/utils/project_analyzer.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "fcff75465ea450fb0211329e4896d45e37e7a8b9",
+      "size": 3833,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/fcff75465ea450fb0211329e4896d45e37e7a8b9"
+    },
+    {
+      "path": "agent-scan/agent_scan/utils/prompt_manager.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e11b1f88e966224bfbf5c4b15d84a2b7aaae400c",
+      "size": 2658,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/e11b1f88e966224bfbf5c4b15d84a2b7aaae400c"
+    },
+    {
+      "path": "agent-scan/agent_scan/utils/todo_manager.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e9b2e17517b579d6b9e41dcccf8caf7f15852877",
+      "size": 8738,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/e9b2e17517b579d6b9e41dcccf8caf7f15852877"
+    },
+    {
+      "path": "agent-scan/agent_scan/utils/tool_context.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b4730bc44f158ec7ab9d24cae23c6765ecd569b2",
+      "size": 5267,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/b4730bc44f158ec7ab9d24cae23c6765ecd569b2"
+    },
+    {
+      "path": "agent-scan/env.example",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "abf7a5fde29bc0c14cd96348f6ea72bcd05f45fd",
+      "size": 964,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/abf7a5fde29bc0c14cd96348f6ea72bcd05f45fd"
+    },
+    {
+      "path": "agent-scan/feature.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "size": 0,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "agent-scan/main.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "1d3d6cb42aaacb62f085dd0e1805b5de2a96e109",
+      "size": 1274,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/1d3d6cb42aaacb62f085dd0e1805b5de2a96e109"
+    },
+    {
+      "path": "agent-scan/providers.yaml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "0b6bfc219a9b5522a963ad1a2994d72532ec6c4c",
+      "size": 7820,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/0b6bfc219a9b5522a963ad1a2994d72532ec6c4c"
+    },
+    {
+      "path": "agent-scan/pyproject.toml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "10b3c1e5c08a58af666471768ae82de6c3a80dd4",
+      "size": 3260,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/10b3c1e5c08a58af666471768ae82de6c3a80dd4"
+    },
+    {
+      "path": "agent-scan/pytests/test_agent_adapter.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "c4f52264d5f387f6a61ae7239e42d5e023eb2dce",
+      "size": 9331,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/c4f52264d5f387f6a61ae7239e42d5e023eb2dce"
+    },
+    {
+      "path": "agent-scan/pytests/test_compact_prompt.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "28b86cbce32b130726576e74b1b32d059d61b90f",
+      "size": 418,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/28b86cbce32b130726576e74b1b32d059d61b90f"
+    },
+    {
+      "path": "agent-scan/pytests/test_llm_request.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e42d4a032eb733cc57610d0e561956002bb910af",
+      "size": 2097,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/e42d4a032eb733cc57610d0e561956002bb910af"
+    },
+    {
+      "path": "agent-scan/pytests/test_skill_registration.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "4018f5235fc879620c994e6ca15d11491195028a",
+      "size": 3517,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/4018f5235fc879620c994e6ca15d11491195028a"
+    },
+    {
+      "path": "agent-scan/requirements.txt",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a35305d6e21e9d9ff020e897e6050ec418086a92",
+      "size": 111,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/a35305d6e21e9d9ff020e897e6050ec418086a92"
+    },
+    {
+      "path": "agent-scan/test_client_connect.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "0092e2b323d1fd12d7c797516733550f1724261c",
+      "size": 2382,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/0092e2b323d1fd12d7c797516733550f1724261c"
+    },
+    {
+      "path": "agent-scan/testcase/case1/main1.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ddc69ef47efeb0c3cb017f7e4f96c11a59b73a23",
+      "size": 4438,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/ddc69ef47efeb0c3cb017f7e4f96c11a59b73a23"
+    },
+    {
+      "path": "agent-scan/testcase/case2/README.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d3aee4df377e183bb7ef1e28517f7596a03a70f3",
+      "size": 4121,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/d3aee4df377e183bb7ef1e28517f7596a03a70f3"
+    },
+    {
+      "path": "agent-scan/testcase/case2/exfil_server.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "924cc09e0d6eebef695e4df3745f93f1bec10ae3",
+      "size": 13175,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/924cc09e0d6eebef695e4df3745f93f1bec10ae3"
+    },
+    {
+      "path": "agent-scan/testcase/case2/image-1.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ebbe91d7cf8808775652b8b7911f7ec26370e437",
+      "size": 34232,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/ebbe91d7cf8808775652b8b7911f7ec26370e437"
+    },
+    {
+      "path": "agent-scan/testcase/case2/image-2.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "4f9845793b60976369bb6d2cb3d63cd2d37e41c9",
+      "size": 9869,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/4f9845793b60976369bb6d2cb3d63cd2d37e41c9"
+    },
+    {
+      "path": "agent-scan/testcase/case2/image-3.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "186ec7e2439e917b1b766c46ac798cae2a5c26da",
+      "size": 32830,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/186ec7e2439e917b1b766c46ac798cae2a5c26da"
+    },
+    {
+      "path": "agent-scan/testcase/case2/image-4.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ffde4a59fde40f2755c9ece9635758615fe96354",
+      "size": 106673,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/ffde4a59fde40f2755c9ece9635758615fe96354"
+    },
+    {
+      "path": "agent-scan/testcase/case2/image-5.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "9b62beefa181314adbe5fb7751c947a649f3d6c4",
+      "size": 109401,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/9b62beefa181314adbe5fb7751c947a649f3d6c4"
+    },
+    {
+      "path": "agent-scan/testcase/case2/image.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "f5e330279ecebaba1bc15d179a33ba1dcff04d93",
+      "size": 23173,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/f5e330279ecebaba1bc15d179a33ba1dcff04d93"
+    },
+    {
+      "path": "agent-scan/testcase/case2/memory_heist_agent.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "f6ff327fe73ba7a9d714b35a3ea73435fa923a2f",
+      "size": 12111,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/f6ff327fe73ba7a9d714b35a3ea73435fa923a2f"
+    },
+    {
+      "path": "agent-scan/testcase/case2/memory_heist_article.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a2f38ade24d8f36ffb899aec49f643d4640e5948",
+      "size": 19315,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/a2f38ade24d8f36ffb899aec49f643d4640e5948"
+    },
+    {
+      "path": "agent-scan/testcase/case2/memory_heist_update_notes.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "82834b4015b64756003cbb1a01b24bcb071c9125",
+      "size": 11282,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/82834b4015b64756003cbb1a01b24bcb071c9125"
+    },
+    {
+      "path": "agent-scan/testcase/case2/provider.yaml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "35d57cf1a8857e2cec12baf5a4ff5d5e80e5cecb",
+      "size": 379,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/35d57cf1a8857e2cec12baf5a4ff5d5e80e5cecb"
+    },
+    {
+      "path": "agent-scan/testcase/case3/README.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ccaf92770d52497ccd3049ae703c817688e1a131",
+      "size": 3042,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/ccaf92770d52497ccd3049ae703c817688e1a131"
+    },
+    {
+      "path": "agent-scan/testcase/case3/main.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3dfcad5993583212da40675795c16637d8ec1b20",
+      "size": 10050,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/3dfcad5993583212da40675795c16637d8ec1b20"
+    },
+    {
+      "path": "agent-scan/testcase/case3/provider.yaml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "1f8bc04edb653e1f20516b1d07cc5fcba6d56e11",
+      "size": 393,
+      "url": "https://api.github.com/repos/Tencent/AI-Infra-Guard/git/blobs/1f8bc04edb653e1f20516b1d07cc5fcba6d56e11"
+    }
+  ]
+}

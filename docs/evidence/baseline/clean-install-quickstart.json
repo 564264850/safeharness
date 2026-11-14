@@ -1,0 +1,14 @@
+{
+  "evidence_kind": "derived_summary",
+  "source_report_sha256": "96797cdba51977b629b19a6428a7b67350d8eac3d6208b34f3baac96889ba70d",
+  "source_run_id": "eab349ec-1b40-49b4-9487-d67bd7b141f6",
+  "source_git_tree": "c60c903209d490be3a59c48ab7ace577505a64af",
+  "passed": true,
+  "synthetic_reviewer": true,
+  "paid_api_calls": 0,
+  "api_restarted_between_approval_and_resume": true,
+  "task_status_after_resume": "SUCCEEDED",
+  "business_write_count": 1,
+  "manual_resume_calls": 0,
+  "assertion": "fresh uv environment from Git index archive; no .venv, artifacts, API key, Docker or PostgreSQL copied into export"
+}

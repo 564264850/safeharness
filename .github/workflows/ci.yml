@@ -1,0 +1,67 @@
+name: SafeHarness contracts
+on: [push, pull_request, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  acceptance:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    env:
+      SAFEHARNESS_DOCKER_TESTS: "1"
+      SAFEHARNESS_POSTGRES_TESTS: "1"
+      PYTHONUTF8: "1"
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - name: Install fixed tooling and locked dependencies
+        run: |
+          python3 -m pip install uv==0.13.7
+          uv sync --locked --extra service --extra judge --python 3.11
+      - name: Validate source and build isolated worker
+        run: |
+          uv run --no-sync ruff check src tests scripts
+          uv run --no-sync ruff format --check src tests scripts
+          uv run --no-sync safeharness sandbox-build
+          uv run --no-sync safeharness sandbox-smoke
+          uv run --no-sync safeharness postgres-up
+      - name: Regression and fixed acceptance matrix (no paid API)
+        run: |
+          uv run --no-sync pytest -q -m 'not acceptance' --junitxml=artifacts/regression.xml
+          uv run --no-sync python scripts/m4_acceptance.py
+          uv run --no-sync python scripts/invocation_demo.py
+          uv run --no-sync python scripts/approval_loop_demo.py --auto-review-for-test
+          uv run --no-sync python scripts/verifier_demo.py
+          uv run --no-sync python scripts/durable_submission_demo.py
+          uv run --no-sync python scripts/queue_worker_demo.py --jobs 8
+          uv run --no-sync python scripts/lease_demo.py
+          uv run --no-sync python scripts/recovery_demo.py
+          uv run --no-sync python scripts/queued_approval_demo.py
+          uv run --no-sync python scripts/database_outage_demo.py
+          uv run --no-sync python scripts/consumer_fencing_demo.py
+          uv run --no-sync python scripts/scheduler_soak.py --duration-seconds 20 --submit-interval 0.5
+          uv run --no-sync python scripts/harness_demo.py
+          uv run --no-sync python scripts/harness_demo.py --coding
+          uv run --no-sync python scripts/check_secrets.py
+          uv run --no-sync python scripts/check_secrets.py --staged
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        if: always()
+        with:
+          name: deterministic-evidence
+          path: |
+            artifacts/regression.xml
+            artifacts/m4-acceptance/**/report.json
+            artifacts/m4-acceptance/**/report.md
+            artifacts/m4-acceptance/**/junit.xml
+            artifacts/invocation-demos/**/report.json
+            artifacts/harness-demos/**/report.json
+            artifacts/approval-loop-demos/**/report.json
+            artifacts/verifier-demos/**/report.json
+            artifacts/scheduler-demos/**/report.json
+            artifacts/queue-worker-demos/**/report.json
+            artifacts/lease-demos/**/report.json
+            artifacts/recovery-demos/**/report.json
+            artifacts/queued-approval-demos/**/report.json
+            artifacts/database-outage-demos/**/report.json
+            artifacts/consumer-fencing-demos/**/report.json
+            artifacts/scheduler-soak/**/report.json
+          if-no-files-found: warn
+          retention-days: 14

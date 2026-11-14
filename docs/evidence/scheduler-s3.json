@@ -1,0 +1,109 @@
+{
+  "date": "2026-11-13",
+  "stage": "S3-leases-heartbeats",
+  "status": "passed",
+  "implementation_sha256": "260f6c3f42899e622b41d3151b7c421896740452c76cb6d2b298b569f8dc5bb9",
+  "migration_head": "0015_queue_leases",
+  "supported_queued_request": {
+    "scenario": "ticket_read",
+    "provider": "scripted",
+    "execution_mode": "queued"
+  },
+  "regression": {
+    "tests": 386,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "xml": "artifacts/queue-lease-regression.xml",
+    "docker_enabled": true,
+    "postgres_enabled": true,
+    "new_cases": 31,
+    "new_postgres_cases": 12
+  },
+  "acceptance": {
+    "passed": true,
+    "instances": 120,
+    "report": "artifacts/m4-acceptance/3ecac9fd-3b1f-45f8-8e17-34ccd1084b99/report.json",
+    "dataset": "m4-development-v1",
+    "holdout": false
+  },
+  "lease_protocol": {
+    "clock": "database time; PostgreSQL clock_timestamp / SQLite julianday",
+    "default_lease_seconds": 30,
+    "default_heartbeat_seconds": 5,
+    "expired_lease_can_be_renewed": false,
+    "heartbeat_uses_independent_thread_and_connection": true,
+    "heartbeat_error_policy": "fence locally; do not retry or requeue blindly",
+    "heartbeat_statement_timeout_ms": 1000,
+    "heartbeat_connect_timeout_seconds": 2
+  },
+  "checks": [
+    "strict expiry boundary; no revival",
+    "clock independent of host claimed_at timestamp",
+    "owner token and generation checked on renewal",
+    "finished/cancelled tasks not renewed",
+    "expired owner cannot dispatch or publish tool result, invocation artifact, checkpoint or verification event",
+    "heartbeat failure stops local authority before database expiry",
+    "failure notification ordering interleaving covered",
+    "long model and tool callbacks renew independently",
+    "blocked database heartbeat write times out and fences execution",
+    "actual process death stops heartbeat and expires lease; no automatic reclaim",
+    "pre-S3 claimed tasks expire on migration without being requeued"
+  ],
+  "demo": {
+    "report": "artifacts/lease-demos/9f78c3e4-5837-4013-9cc9-4c66f134f37b/report.json",
+    "backend": "sqlite",
+    "lease_seconds": 1.5,
+    "heartbeat_seconds": 0.1,
+    "scenarios": [
+      {
+        "name": "long_tool",
+        "passed": true,
+        "initial_count": 1,
+        "final_count": 21,
+        "final_lease_status": "RELEASED"
+      },
+      {
+        "name": "heartbeat_failure",
+        "passed": true,
+        "initial_count": 1,
+        "final_count": 1,
+        "final_lease_status": "EXPIRED"
+      },
+      {
+        "name": "process_death",
+        "passed": true,
+        "initial_count": 3,
+        "final_count": 3,
+        "final_lease_status": "EXPIRED"
+      }
+    ]
+  },
+  "package": {
+    "wheel": "artifacts\\scheduler-s3-package\\safeharness-0.1.0-py3-none-any.whl",
+    "sha256": "62f1e0395c18d3d68bc77ec0139cbeeffdfd984ea0584960d10129e797c02cfe",
+    "python_files_match": 63,
+    "lease_module_and_migration_included": true,
+    "isolated_wheel_demo": "artifacts/lease-demos/9f78c3e4-5837-4013-9cc9-4c66f134f37b/report.json"
+  },
+  "compatibility_demos": {
+    "s1": "artifacts/scheduler-demos/a7dcc870-2bdb-4535-a207-71fb24056365/report.json",
+    "s2": "artifacts/queue-worker-demos/356e2030-e3ae-4776-8a91-b228fd937495/report.json"
+  },
+  "paid_api_calls": 0,
+  "paid_api_cost_cny": "0",
+  "lint": "ruff check and format passed",
+  "ci": "configured; remote workflow not run",
+  "pending": [
+    "S4 expiry scanning and evidence-based automatic takeover",
+    "S5 complete takeover/in-flight-side-effect fencing",
+    "S6 queued approval and write workflows",
+    "S7 operational acceptance"
+  ],
+  "limits": [
+    "Database lease ACTIVE does not prove the worker is healthy; local fencing may precede expiry.",
+    "In-flight external requests are not cancelled by a lease check; late results are rejected.",
+    "No automatic recovery or requeue of expired claims in S3.",
+    "Shared deployments must stop older processes before migration."
+  ]
+}

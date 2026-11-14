@@ -1,0 +1,66 @@
+{
+  "evidence_kind": "derived_summary",
+  "recorded_at": "2026-11-14",
+  "source_index": "docs/evidence/scheduler-s5-s7.json",
+  "implementation_fingerprint_pre_git_lf_normalization": "15d924e6fd221316219f8fd51cc04a702a0db06c2e0ce7808c5c4ea2da553567",
+  "regression": {
+    "tests": 483,
+    "passed": true,
+    "skipped": 0,
+    "source_junit_sha256": "c83bf0929f06ed66a820d7b66ecd7408fb80ef88de5a14a9d007e900832ec5fe",
+    "docker": true,
+    "postgres": true
+  },
+  "fixed_acceptance": {
+    "instances": 120,
+    "passed": true,
+    "holdout": false,
+    "dataset": "m4-development-v1"
+  },
+  "repeated_fault_windows": {
+    "completed_repetitions": 30,
+    "instances": 240,
+    "backends": [
+      "sqlite",
+      "postgres"
+    ],
+    "named_windows": [
+      "old worker released after replacement completes",
+      "business committed before control receipt persisted",
+      "approval wake transaction rollback",
+      "two submitters competing for one capacity slot"
+    ],
+    "source_report_sha256": "f0275a4666a2b731921b8dcc1712ba4615fbb1a73f209ad34e78a45650411a48"
+  },
+  "soak": {
+    "seconds": 3600.406,
+    "accepted_and_finished": 1165,
+    "writes": 291,
+    "receipts": 291,
+    "duplicates": 0
+  },
+  "package": {
+    "wheel_sha256": "82e430fcf604d026a6efe9f9cd85021c84d40ce29d67fd595ef5d9d0cde253e4",
+    "python_files": 68,
+    "migration_0017_included": true,
+    "isolated_install_validated": true
+  },
+  "paid_api_calls": 0,
+  "remote_ci": "configured_not_run",
+  "stage1_local_regression": {
+    "recorded_at": "2026-11-15",
+    "tests_passed": 493,
+    "skipped": 0,
+    "acceptance_deselected": 120,
+    "docker_enabled": true,
+    "postgres_enabled": true,
+    "host": "Windows with Docker Linux engine",
+    "elapsed_seconds": 474.67,
+    "junit": "artifacts/stage1-regression.xml (local, not included)",
+    "junit_sha256": "eec12fba3de5c9ec3d34f3bb580d4e8cecbbc40a3e1b8d963eb0e77738525294",
+    "new_regressions": [
+      "Git index publication secret/path guard tests",
+      "approved queued task denied after writable scope revocation"
+    ]
+  }
+}

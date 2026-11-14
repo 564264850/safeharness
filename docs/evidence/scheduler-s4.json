@@ -1,0 +1,108 @@
+{
+  "date": "2026-11-14",
+  "stage": "S4-expired-task-recovery",
+  "status": "passed",
+  "implementation_sha256": "a6b3409b5b9d4efa8652bcd9aeec857ee311c7fba16289626c8a83952b38ab7d",
+  "migration_head": "0016_queue_recovery",
+  "supported_queued_request": {
+    "scenario": "ticket_read",
+    "provider": "scripted",
+    "execution_mode": "queued"
+  },
+  "regression": {
+    "tests": 441,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "xml": "artifacts/queue-recovery-regression.xml",
+    "docker_enabled": true,
+    "postgres_enabled": true,
+    "new_cases": 55,
+    "new_postgres_cases": 25
+  },
+  "acceptance": {
+    "passed": true,
+    "instances": 120,
+    "report": "artifacts/m4-acceptance/8f876025-b5fa-4daa-abf8-abc2bd0385de/report.json",
+    "dataset": "m4-development-v1",
+    "holdout": false
+  },
+  "recovery_protocol": {
+    "database_time_expiry_check": true,
+    "lease_rechecked_after_queue_row_lock": true,
+    "safe_decision_persisted_as": "READY",
+    "new_token_and_generation_on_worker_claim": true,
+    "checkpoint_id_and_source_generation_pinned": true,
+    "original_task_deadline_and_steps_preserved": true,
+    "default_max_automatic_recoveries": 3,
+    "unknown_calls_replayed": false
+  },
+  "checks": [
+    "safe recovery before start, before session and at initial/before-model/after-model/after-tool/final/verifying checkpoints",
+    "unknown attempts, pre-dispatch boundary and missing/damaged/deep JSON checkpoint stop for review",
+    "task deadline and retry count survive process recreation",
+    "crash between replacement claim and checkpoint acquisition can resume again",
+    "changed configuration or pinned checkpoint rejected without further dispatch",
+    "manual, live and cancelled tasks excluded; READY cancellation respected",
+    "decision/queue/task/event transaction rollback",
+    "two actual scanner processes produce one decision",
+    "PostgreSQL inflight renewal commits before scanner recheck; live lease not revoked",
+    "task row lock followed by fresh queue read avoids stale join snapshot claim errors",
+    "new review generation resets heartbeat count"
+  ],
+  "demo": {
+    "report": "artifacts/recovery-demos/09dcdb44-933c-4afb-8b90-1aa5a245cd44/report.json",
+    "backend": "sqlite",
+    "actual_worker_termination": true,
+    "separate_scanner_and_standby_processes": true,
+    "scenarios": [
+      {
+        "name": "safe",
+        "task_status": "SUCCEEDED",
+        "generation": 2,
+        "recovery_count": 1,
+        "tool_calls_before": 1,
+        "tool_calls_after": 1,
+        "original_call_id_preserved": true,
+        "business_writes": 0
+      },
+      {
+        "name": "unknown",
+        "task_status": "NEEDS_REVIEW",
+        "generation": 2,
+        "recovery_count": 1,
+        "tool_calls_before": 1,
+        "tool_calls_after": 1,
+        "original_call_id_preserved": true,
+        "business_writes": 0
+      }
+    ]
+  },
+  "package": {
+    "wheel": "artifacts\\scheduler-s4-package\\safeharness-0.1.0-py3-none-any.whl",
+    "sha256": "989405675e812a82a3006e5f121d34924bf4febd95a91c1b6cecfd2fcaf9d927",
+    "python_files_match": 65,
+    "recovery_module_and_migration_included": true,
+    "isolated_wheel_demo": "artifacts/recovery-demos/09dcdb44-933c-4afb-8b90-1aa5a245cd44/report.json"
+  },
+  "compatibility_demos": {
+    "s1": "artifacts/scheduler-demos/99a81b90-49f3-4974-91a1-5e2a38a42b1c/report.json",
+    "s2": "artifacts/queue-worker-demos/e84c7595-52b3-405c-9e0e-430a4ed5612f/report.json"
+  },
+  "paid_api_calls": 0,
+  "paid_api_cost_cny": "0",
+  "lint": "ruff check and format passed",
+  "ci": "configured; remote workflow not run",
+  "pending": [
+    "S5 comprehensive stale-worker reactivation and inflight-side-effect fencing",
+    "S6 queued approvals and business receipt reconciliation",
+    "S7 operational acceptance"
+  ],
+  "limits": [
+    "Automatic queue recovery supports only scripted ticket_read.",
+    "before_tool and unconfirmed calls require review; no arbitrary receipt-to-checkpoint reconstruction.",
+    "Old orphan claims with no recorded deadline are not granted a new budget.",
+    "NEEDS_REVIEW is a durable stop; a full operator resolution UI is not implemented.",
+    "Fixed synthetic development acceptance is not production certification."
+  ]
+}

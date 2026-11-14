@@ -1,0 +1,196 @@
+{
+  "stage": "S4-S5-expired-task-recovery-and-stale-worker",
+  "passed": true,
+  "paid_api_calls": 0,
+  "backend": "sqlite",
+  "scenarios": [
+    {
+      "scenario": "safe",
+      "passed": true,
+      "victim_pid": 23184,
+      "scanner_pid": 25384,
+      "standby_pid": 28108,
+      "before": {
+        "task_id": "52c77a6e-46c6-4df7-84c3-21867db279e5",
+        "task_status": "RUNNING",
+        "scheduling": {
+          "mode": "queued",
+          "schema_version": 1,
+          "state": "CLAIMED",
+          "created_at": "2026-11-14T07:16:56.029+00:00",
+          "generation": 1,
+          "claimed_by": "worker-999f59a150784310",
+          "claimed_at": "2026-11-14T07:16:57.584+00:00",
+          "execution_deadline_at": 1794640737.5840065,
+          "lease_seconds": 1.5,
+          "last_heartbeat_at": 1794640617.9539905,
+          "lease_expires_at": 1794640619.4539905,
+          "heartbeat_count": 2,
+          "lease_status": "ACTIVE"
+        }
+      },
+      "after": {
+        "task_id": "52c77a6e-46c6-4df7-84c3-21867db279e5",
+        "task_status": "SUCCEEDED",
+        "scheduling": {
+          "mode": "queued",
+          "schema_version": 1,
+          "state": "FINISHED",
+          "created_at": "2026-11-14T07:16:56.029+00:00",
+          "generation": 2,
+          "claimed_by": "standby",
+          "claimed_at": "2026-11-14T07:17:01.271+00:00",
+          "finished_at": "2026-11-14T07:17:01.403+00:00",
+          "recovery_count": 1,
+          "recovery_mode": "resume",
+          "recovery_code": "safe_checkpoint",
+          "execution_deadline_at": 1794640737.5840065,
+          "lease_seconds": 30.0,
+          "last_heartbeat_at": 1794640621.2850122,
+          "lease_expires_at": 1794640651.2850122,
+          "heartbeat_count": 1,
+          "lease_status": "RELEASED"
+        }
+      },
+      "tool_calls_before": 1,
+      "tool_calls_after": 1,
+      "original_call_id_preserved": true,
+      "duplicate_business_writes": 0,
+      "old_worker_result": null
+    },
+    {
+      "scenario": "unknown",
+      "passed": true,
+      "victim_pid": 34416,
+      "scanner_pid": 11652,
+      "standby_pid": 32796,
+      "before": {
+        "task_id": "01a09053-5ad7-4480-9df6-d50d21c44fbb",
+        "task_status": "RUNNING",
+        "scheduling": {
+          "mode": "queued",
+          "schema_version": 1,
+          "state": "CLAIMED",
+          "created_at": "2026-11-14T07:17:01.611+00:00",
+          "generation": 1,
+          "claimed_by": "worker-d96d723edc464d4a",
+          "claimed_at": "2026-11-14T07:17:03.042+00:00",
+          "execution_deadline_at": 1794640743.0419934,
+          "lease_seconds": 1.5,
+          "last_heartbeat_at": 1794640623.0510056,
+          "lease_expires_at": 1794640624.5510056,
+          "heartbeat_count": 1,
+          "lease_status": "ACTIVE"
+        }
+      },
+      "after": {
+        "task_id": "01a09053-5ad7-4480-9df6-d50d21c44fbb",
+        "task_status": "NEEDS_REVIEW",
+        "scheduling": {
+          "mode": "queued",
+          "schema_version": 1,
+          "state": "FINISHED",
+          "created_at": "2026-11-14T07:17:01.611+00:00",
+          "generation": 2,
+          "claimed_by": "recovery-scanner",
+          "claimed_at": "2026-11-14T07:17:06.103+00:00",
+          "finished_at": "2026-11-14T07:17:06.105+00:00",
+          "recovery_count": 1,
+          "recovery_mode": "review",
+          "recovery_code": "unconfirmed_call",
+          "execution_deadline_at": 1794640743.0419934,
+          "lease_seconds": 30.0,
+          "last_heartbeat_at": 1794640626.1030107,
+          "lease_expires_at": 1794640656.1030107,
+          "heartbeat_count": 0,
+          "lease_status": "RELEASED"
+        }
+      },
+      "tool_calls_before": 1,
+      "tool_calls_after": 1,
+      "original_call_id_preserved": true,
+      "duplicate_business_writes": 0,
+      "old_worker_result": null
+    },
+    {
+      "scenario": "stale",
+      "passed": true,
+      "victim_pid": 31888,
+      "scanner_pid": 34196,
+      "standby_pid": 28020,
+      "before": {
+        "task_id": "3e7189c4-043e-4762-ae9e-c026a6578a6a",
+        "task_status": "RUNNING",
+        "scheduling": {
+          "mode": "queued",
+          "schema_version": 1,
+          "state": "CLAIMED",
+          "created_at": "2026-11-14T07:17:06.301+00:00",
+          "generation": 1,
+          "claimed_by": "worker-8825af60e274467d",
+          "claimed_at": "2026-11-14T07:17:08.013+00:00",
+          "execution_deadline_at": 1794640748.0129983,
+          "lease_seconds": 1.5,
+          "last_heartbeat_at": 1794640628.1890182,
+          "lease_expires_at": 1794640629.6890182,
+          "heartbeat_count": 2,
+          "lease_status": "ACTIVE"
+        }
+      },
+      "after": {
+        "task_id": "3e7189c4-043e-4762-ae9e-c026a6578a6a",
+        "task_status": "SUCCEEDED",
+        "scheduling": {
+          "mode": "queued",
+          "schema_version": 1,
+          "state": "FINISHED",
+          "created_at": "2026-11-14T07:17:06.301+00:00",
+          "generation": 2,
+          "claimed_by": "standby",
+          "claimed_at": "2026-11-14T07:17:11.616+00:00",
+          "finished_at": "2026-11-14T07:17:11.706+00:00",
+          "recovery_count": 1,
+          "recovery_mode": "resume",
+          "recovery_code": "safe_checkpoint",
+          "execution_deadline_at": 1794640748.0129983,
+          "lease_seconds": 30.0,
+          "last_heartbeat_at": 1794640631.6229968,
+          "lease_expires_at": 1794640661.6229968,
+          "heartbeat_count": 1,
+          "lease_status": "RELEASED"
+        }
+      },
+      "tool_calls_before": 1,
+      "tool_calls_after": 1,
+      "original_call_id_preserved": true,
+      "duplicate_business_writes": 0,
+      "old_worker_result": {
+        "status": "lease_lost",
+        "worker_id": "worker-8825af60e274467d",
+        "code": "ownership_changed",
+        "task_id": "3e7189c4-043e-4762-ae9e-c026a6578a6a",
+        "task_status": "SUCCEEDED",
+        "revision": 5,
+        "scheduling": {
+          "mode": "queued",
+          "schema_version": 1,
+          "state": "FINISHED",
+          "created_at": "2026-11-14T07:17:06.301+00:00",
+          "generation": 2,
+          "claimed_by": "standby",
+          "claimed_at": "2026-11-14T07:17:11.616+00:00",
+          "finished_at": "2026-11-14T07:17:11.706+00:00",
+          "recovery_count": 1,
+          "recovery_mode": "resume",
+          "recovery_code": "safe_checkpoint",
+          "execution_deadline_at": 1794640748.0129983,
+          "lease_seconds": 30.0,
+          "last_heartbeat_at": 1794640631.6229968,
+          "lease_expires_at": 1794640661.6229968,
+          "heartbeat_count": 1,
+          "lease_status": "RELEASED"
+        }
+      }
+    }
+  ]
+}

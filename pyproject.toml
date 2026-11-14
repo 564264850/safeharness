@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "safeharness"
+version = "0.1.0"
+description = "An Agent harness for controlled tool execution, recovery, and evaluation"
+license-files = ["THIRD_PARTY_NOTICES.md"]
+requires-python = ">=3.11"
+dependencies = ["alembic>=1.15,<2", "pydantic>=2,<3", "sqlalchemy>=2.0,<2.1"]
+
+[project.optional-dependencies]
+judge = ["py-openjudge==0.2.4"]
+service = ["fastapi==0.162.4", "uvicorn==0.54.0", "httpx==0.28.1", "psycopg[binary]>=3.2,<4"]
+
+[project.scripts]
+safeharness = "safeharness.__main__:main"
+
+[dependency-groups]
+dev = ["pytest>=8,<10", "ruff>=0.11,<1"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = ["docker: opt-in tests using the local Linux Docker Engine", "judge: optional OpenJudge contract tests without paid calls", "postgres: opt-in dedicated local PostgreSQL integration tests", "acceptance: versioned M4 synthetic acceptance matrix"]
+
+[tool.setuptools.package-data]
+safeharness = ["sandbox_assets/*", "sandbox_assets/.dockerignore", "sandbox_assets/verifier/*.py", "datasets/*.json"]
+
+[tool.ruff]
+target-version = "py311"
+extend-exclude = [".tools"]

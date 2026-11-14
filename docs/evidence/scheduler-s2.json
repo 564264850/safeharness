@@ -1,0 +1,80 @@
+{
+  "date": "2026-11-13",
+  "stage": "S2-independent-worker",
+  "status": "passed",
+  "implementation_sha256": "26b9dc2ff81d3c94e959b4162d3553616bf382f16ff1d0192fc7c82ba17053e4",
+  "migration_head": "0014_queue_claims",
+  "supported_queued_request": {
+    "scenario": "ticket_read",
+    "provider": "scripted",
+    "execution_mode": "queued"
+  },
+  "regression": {
+    "tests": 355,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "xml": "artifacts/queue-worker-regression.xml",
+    "docker_enabled": true,
+    "postgres_enabled": true,
+    "new_cases": 30,
+    "new_postgres_cases": 15
+  },
+  "acceptance": {
+    "passed": true,
+    "instances": 120,
+    "report": "artifacts/m4-acceptance/ae47caf8-c891-4511-9133-da3df02eb3b4/report.json",
+    "dataset": "m4-development-v1",
+    "holdout": false
+  },
+  "claim_protocol": {
+    "postgres": "short transaction; FOR UPDATE OF t SKIP LOCKED",
+    "sqlite": "BEGIN IMMEDIATE",
+    "task_and_queue_terminal_commit_atomic": true,
+    "claim_token_in_public_output": false,
+    "existing_harness_reused": true
+  },
+  "checks": [
+    "two actual worker processes compete for one task; one claimant and one tool call",
+    "two workers drain batch; manual and cancelled tasks untouched",
+    "PostgreSQL locked oldest task is skipped; claim transaction releases row lock",
+    "owner, role and read scope checked using current worker configuration",
+    "wrong or absent claim rejected at transitions and dispatch",
+    "claim/finish event failures roll back associated task/queue changes",
+    "S1 migration preserves queued, cancelled and manual tasks",
+    "unfinished result cannot be reported as processed",
+    "actual worker crash leaves CLAIMED; no blind takeover in S2"
+  ],
+  "http_cli_demo": {
+    "report": "artifacts/queue-worker-demos/5adc65ad-26cd-4723-8c95-fb35f035f968/report.json",
+    "backend": "sqlite",
+    "jobs": 8,
+    "api_stopped_during_execution": true,
+    "worker_processes": 2
+  },
+  "manual_two_phase_demo": "artifacts/queue-worker-demos/05656f32-b329-4c73-af93-a3e8ceef784a/report.json",
+  "package": {
+    "wheel": "artifacts\\scheduler-s2-package\\safeharness-0.1.0-py3-none-any.whl",
+    "sha256": "510a3743a4b897280c2fa30712e7b2f876c60dc8ceac49e58a231ffeea8789f0",
+    "python_files_match": 61,
+    "new_migration_included": true,
+    "isolated_wheel_demo": "artifacts/queue-worker-demos/1aa0de00-f668-4957-89d5-40ad65638ab6/report.json"
+  },
+  "s1_compatibility_demo": "artifacts/scheduler-demos/6a3d0328-308c-4e04-a9f5-9c5f405d955c/report.json",
+  "paid_api_calls": 0,
+  "paid_api_cost_cny": "0",
+  "lint": "ruff check and format passed",
+  "ci": "configured; remote workflow not run",
+  "pending": [
+    "S3 leases and independent heartbeats",
+    "S4 evidence-based abandoned-task recovery",
+    "S5 complete stale-worker and in-flight-operation fencing",
+    "S6 queued approval/write workflows",
+    "S7 operational acceptance"
+  ],
+  "limits": [
+    "Worker crash after claim leaves CLAIMED and requires inspection; not automatically retried.",
+    "Principal configuration loaded at worker startup; not an online identity revocation system.",
+    "No general exactly-once promise for external business side effects."
+  ]
+}
