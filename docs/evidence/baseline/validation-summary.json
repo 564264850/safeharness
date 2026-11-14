@@ -62,5 +62,34 @@
       "Git index publication secret/path guard tests",
       "approved queued task denied after writable scope revocation"
     ]
+  },
+  "hosted_ci": {
+    "run_id": 43618882633,
+    "url": "https://github.com/564264850/safeharness/actions/runs/43618882633",
+    "commit": "724fceb82bc5cee1eae4c7de52dc11a4fdd89748",
+    "status": "success",
+    "runner": "ubuntu-24.04",
+    "regression": {
+      "passed": 493,
+      "skipped": 0,
+      "acceptance_deselected": 120,
+      "elapsed_seconds": 179.26,
+      "junit_sha256": "a85e3aaf20f78db355106507dc011b0bb2833533aca1e1394cf5302dce7e3f9f"
+    },
+    "fixed_acceptance": {
+      "instances": 120,
+      "passed": true,
+      "dataset": "m4-development-v1",
+      "holdout": false,
+      "model_calls": 0,
+      "report_sha256": "327b7f2a01da667820f42f158b6219a292abfb68a14cfd23dc47403db2294626"
+    },
+    "paid_api_calls": 0,
+    "uploaded_artifact": {
+      "name": "deterministic-evidence",
+      "artifact_id": 14123816902,
+      "retention_days": 14,
+      "archive_sha256": "604a577ae96d71dbf08319eeac56802a912eb1be1d80bb5b5cbe490d6816716b"
+    }
   }
 }

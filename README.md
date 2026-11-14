@@ -62,7 +62,7 @@ These are reproducible project results, with the full scope and caveats linked i
 | Repeated scheduler fault windows | 240 test instances passed | Four named fault windows, SQLite and PostgreSQL, 30 repetitions each |
 | Healthy scheduler soak | 3,600.406 seconds; 1,165 tasks finished | Scripted fixed-ticket workload; 291 writes with 291 receipts and no duplicates |
 | Approval and recovery demos | Passed | Local mock ticket business system; no paid model calls |
-| Remote CI | Pending first authenticated push | Workflow is configured; no hosted run is claimed yet |
+| Hosted CI | [Run 43618882633 passed](https://github.com/564264850/safeharness/actions/runs/43618882633) | Ubuntu 24.04; 493 regression tests plus 120 fixed acceptance cases; 0 paid API calls |
 
 Portable machine-readable summaries and raw selected demo reports live in [the checked-in evidence bundle](docs/evidence/baseline/README.md). The prior detailed command reference remains available as the [CLI walkthrough](docs/cli-walkthrough.md); see the [document index](docs/index.md).
 
@@ -85,4 +85,4 @@ Portable machine-readable summaries and raw selected demo reports live in [the c
 
 ## Development notes
 
-Python 3.11 is the validated environment. Locked dependencies are installed with `uv sync --locked --extra service --extra judge --python 3.11`. Docker Desktop with its Linux engine and a local PostgreSQL service are needed for the complete integration run. The GitHub Actions workflow builds the worker image and runs the deterministic integration and acceptance checks on Ubuntu; its first hosted result is pending repository authentication and push.
+Python 3.11 is the validated environment. Locked dependencies are installed with `uv sync --locked --extra service --extra judge --python 3.11`. Docker Desktop with its Linux engine and a local PostgreSQL service are needed for the complete local integration run. The first hosted Ubuntu run passed on commit `724fceb`; its regression XML and deterministic demo reports are retained as a GitHub Actions artifact for 14 days. The workflow uses no paid model API.

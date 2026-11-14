@@ -8,10 +8,10 @@ Review input: `SafeHarness-项目评审汇报.md`, dated 2026-11-14. The source 
 | --- | --- | --- |
 | The project lacked Git history and a recruiter-friendly entry point. | Git was initialized as a new archive; README, documentation index, and the earlier command walkthrough were separated. No past milestones were fabricated. | Corrected in this Stage 1 archive. |
 | Local test artifacts and credentials must not be published. | The source archive excludes `artifacts/`, local environments, provider credentials, databases, and private service config. A new publication guard scans Git index blobs and rejects private paths; tests prove it sees staged content even if the working file has since been cleaned. | Add the index scan to CI and keep the original local artifact tree. |
-| CI needs a hosted result before the README can claim it passed. | A GitHub Actions workflow exists; the pre-push evidence says `configured_not_run`. | Do not add a passing badge or call remote CI green until an authenticated push has actually run. |
+| CI needs a hosted result before the README can claim it passed. | GitHub Actions run [43618882633](https://github.com/564264850/safeharness/actions/runs/43618882633) completed successfully on commit `724fceb`; it ran the regression suite, fixed acceptance matrix, Docker worker checks, demos, and both secret scans. | The hosted gate now has a real passing result. Preserve the run link and do not generalize its synthetic acceptance data into production claims. |
 | The user-facing evidence should make its scope easy to inspect. | Selected raw demo reports and derived validation summaries are checked in under `docs/evidence/baseline/`; each derived summary identifies source provenance and its limitations. | Keep raw local runs ignored; do not rewrite old reports to match the new Git snapshot. |
 | There is no operator UI for all `NEEDS_REVIEW` cases and no arbitrary business adapter guarantee. | Current guides explicitly limit the queue to scripted ticket workflows and local mock receipts. | Real business adapter and safe operator resolution remain future work; not a reason to claim production readiness. |
-| An authenticated publication identity is needed for the specified GitHub remote. | The target repository is an existing public empty repository. Device authentication is awaiting the account owner in a browser. | Use the user's GitHub login plus its no-reply address after authorization; never place a password or token in chat. |
+| An authenticated publication identity is needed for the specified GitHub remote. | The target repository was an existing public empty repository; the user's GitHub account is authenticated and the initial archive is pushed. | The repository now has a real initial snapshot commit; the original source had no earlier Git history to import. |
 
 ## Current design limits, not newly discovered regressions
 
@@ -32,7 +32,7 @@ Review input: `SafeHarness-项目评审汇报.md`, dated 2026-11-14. The source 
 
 ## Priority decisions for the internship portfolio
 
-1. Finish the portable publication path and obtain a real hosted CI result.
+1. Keep the portable publication path green as changes land; the initial archive and hosted CI gate are now established.
 2. Keep unsupported product promises out of the README; make one short demo easy to run without a paid API.
 3. Add a second adapter behind a stable contract (MCP read-only is a suitable first step) and demonstrate that it still passes the same gateway policy and audit checks.
 4. Only then add a minimal task/approval/evidence view if it helps show an end-to-end Agent workflow. A polished console is optional for a Runtime-focused resume and does not replace protocol tests.
