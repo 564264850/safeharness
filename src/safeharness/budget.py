@@ -13,9 +13,12 @@ class BudgetError(RuntimeError):
 
 
 class BudgetLedger:
-    # Flash peak, cache-miss ceiling, verified 2026-11-11. Micro-CNY/token.
-    INPUT_RATE = 2
-    OUTPUT_RATE = 8
+    # Peak cache-miss rates, rounded up from official USD pricing at an explicit
+    # operator budget assumption of no more than CNY 8 per USD. Micro-CNY/token.
+    INPUT_RATE = 3
+    OUTPUT_RATE = 10
+    LEGACY_PRICING_VERSION = "deepseek-flash-peak-20261111"
+    PRICING_VERSION = "deepseek-flash-peak-usd-20260816-fx-ceiling-8"
 
     def __init__(
         self,
@@ -36,8 +39,55 @@ class BudgetLedger:
                 "CREATE TABLE IF NOT EXISTS budgets (budget_id TEXT PRIMARY KEY, limit_micro INTEGER NOT NULL, max_calls INTEGER NOT NULL)"
             )
             connection.execute(
-                "CREATE TABLE IF NOT EXISTS requests (attempt_id TEXT PRIMARY KEY, budget_id TEXT NOT NULL REFERENCES budgets(budget_id), task_id TEXT NOT NULL, reserved_micro INTEGER NOT NULL, settled_micro INTEGER, prompt_tokens INTEGER, completion_tokens INTEGER, status TEXT NOT NULL, created_at TEXT NOT NULL)"
+                "CREATE TABLE IF NOT EXISTS requests (attempt_id TEXT PRIMARY KEY, budget_id TEXT NOT NULL REFERENCES budgets(budget_id), task_id TEXT NOT NULL, reserved_micro INTEGER NOT NULL, settled_micro INTEGER, prompt_tokens INTEGER, completion_tokens INTEGER, status TEXT NOT NULL, created_at TEXT NOT NULL, pricing_version TEXT NOT NULL)"
             )
+            connection.execute("BEGIN IMMEDIATE")
+            columns = {
+                row[1] for row in connection.execute("PRAGMA table_info(requests)")
+            }
+            if "pricing_version" not in columns:
+                connection.execute(
+                    "ALTER TABLE requests ADD COLUMN pricing_version TEXT NOT NULL DEFAULT '"
+                    + self.LEGACY_PRICING_VERSION
+                    + "'"
+                )
+            # Revalue settled history at the current conservative ceiling. An old
+            # reservation contains no token split, so scale it by the worst rate
+            # ratio (new input / old input = 1.5) and round up.
+            legacy_rows = connection.execute(
+                "SELECT attempt_id,reserved_micro,settled_micro,prompt_tokens,completion_tokens,status,pricing_version FROM requests WHERE pricing_version<>?",
+                (self.PRICING_VERSION,),
+            ).fetchall()
+            for (
+                attempt,
+                reserved,
+                settled,
+                prompt,
+                completion,
+                status,
+                _,
+            ) in legacy_rows:
+                if (
+                    status == "SETTLED"
+                    and prompt is not None
+                    and completion is not None
+                ):
+                    cost = prompt * self.INPUT_RATE + completion * self.OUTPUT_RATE
+                    connection.execute(
+                        "UPDATE requests SET settled_micro=?,pricing_version=? WHERE attempt_id=?",
+                        (cost, self.PRICING_VERSION, attempt),
+                    )
+                elif status == "RESERVED":
+                    conservative = (reserved * 3 + 1) // 2
+                    connection.execute(
+                        "UPDATE requests SET reserved_micro=?,pricing_version=? WHERE attempt_id=?",
+                        (conservative, self.PRICING_VERSION, attempt),
+                    )
+                else:
+                    connection.execute(
+                        "UPDATE requests SET pricing_version=? WHERE attempt_id=?",
+                        (self.PRICING_VERSION, attempt),
+                    )
             connection.execute(
                 "INSERT OR IGNORE INTO budgets VALUES (?,?,?)",
                 (budget_id, self.limit, max_calls),
@@ -83,13 +133,14 @@ class BudgetLedger:
             if used + reserve > limit or count >= max_calls:
                 raise BudgetError("Persistent provider budget exhausted")
             connection.execute(
-                "INSERT INTO requests VALUES (?,?,?,?,NULL,NULL,NULL,'RESERVED',?)",
+                "INSERT INTO requests (attempt_id,budget_id,task_id,reserved_micro,settled_micro,prompt_tokens,completion_tokens,status,created_at,pricing_version) VALUES (?,?,?,?,NULL,NULL,NULL,'RESERVED',?,?)",
                 (
                     attempt_id.hex,
                     self.budget_id,
                     task_id.hex,
                     reserve,
                     datetime.now(UTC).isoformat(timespec="seconds"),
+                    self.PRICING_VERSION,
                 ),
             )
 
@@ -126,6 +177,15 @@ class BudgetLedger:
                 + where,
                 values,
             ).fetchone()
+            pricing_versions = [
+                item[0]
+                for item in connection.execute(
+                    "SELECT DISTINCT pricing_version FROM requests WHERE "
+                    + where
+                    + " ORDER BY pricing_version",
+                    values,
+                ).fetchall()
+            ]
         return {
             "budget_id": self.budget_id,
             "calls": row[0],
@@ -134,5 +194,6 @@ class BudgetLedger:
             "cost_upper_cny": self.cny(row[3]),
             "unknown_usage_calls": row[4],
             "limit_cny": self.cny(self.limit),
-            "pricing_version": "deepseek-flash-peak-20261111",
+            "pricing_version": self.PRICING_VERSION,
+            "pricing_versions": pricing_versions,
         }

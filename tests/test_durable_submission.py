@@ -310,6 +310,7 @@ def test_http_restart_response_loss_ownership_and_cancel(tmp_path):
 )
 def test_unsupported_or_forged_queue_request_creates_nothing(tmp_path, extra):
     store = TaskStore(tmp_path / "invalid.sqlite3")
+    expected_status = 403 if extra.get("provider") == "deepseek" else 422
     with TestClient(
         create_app(store, TicketStore(store.database), principals())
     ) as client:
@@ -317,7 +318,7 @@ def test_unsupported_or_forged_queue_request_creates_nothing(tmp_path, extra):
             client.post(
                 "/v1/tasks", json={**REQUEST, **extra}, headers=headers("alice")
             ).status_code
-            == 422
+            == expected_status
         )
         assert (
             client.post(

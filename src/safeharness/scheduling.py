@@ -247,9 +247,11 @@ def canonical_request(request):
     elif mode != "queued" or (
         request.get("scenario")
         not in {"ticket_read", "ticket_update", "ticket_update_read"}
-        or request.get("provider", "scripted") != "scripted"
+        or request.get("provider", "scripted") not in ("scripted", "deepseek")
     ):
-        raise ValueError("Queued mode supports scripted ticket scenarios only")
+        raise ValueError(
+            "Queued mode supports ticket scenarios and known providers only"
+        )
     return request
 
 

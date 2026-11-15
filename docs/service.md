@@ -58,7 +58,7 @@ Invoke-RestMethod "$base/v1/tasks/$taskId/trace" -Headers $owner | ConvertTo-Jso
 | `GET /health`、`GET /ready` | 进程存活和数据库就绪；后者数据库故障返回 503 |
 | `GET /v1/operations` | auditor 读取队列计数、过期租约和待核对告警 |
 
-`/run` 是同步请求。任务执行并发信号量每进程为 2，数据库行锁负责跨进程写入一致性。R3/R4 支持模型上下文、Coding 快照和审批后的显式续跑。queued 任务不能使用手动入口运行，当前支持 scripted + ticket_read/ticket_update/ticket_update_read；批准后自动唤醒 worker，不需 `/resume`。`serve --max-pending` 限制数据库活跃队列容量，默认 1000，满载新接单返回 429，幂等重放仍可返回原任务。取消 Coding 会停止后续派发，正在执行的沙箱 worker 会被回收；正在等待的模型 HTTP 请求可能到达其有界超时后才返回。
+`/run` 是同步请求。任务执行并发信号量每进程为 2，数据库行锁负责跨进程写入一致性。R3/R4 支持模型上下文、Coding 快照和审批后的显式续跑。queued 任务不能使用手动入口运行，当前支持 scripted 和显式启用的 DeepSeek + ticket_read/ticket_update/ticket_update_read；批准后自动唤醒 worker，不需 `/resume`。`serve --max-pending` 限制数据库活跃队列容量，默认 1000，满载新接单返回 429，幂等重放仍可返回原任务。取消 Coding 会停止后续派发，正在执行的沙箱 worker 会被回收；正在等待的模型 HTTP 请求可能到达其有界超时后才返回。
 
 不需要启动常驻服务也能运行两条演示，每次创建独立数据库和临时服务，自动保存报告并停止服务：
 
@@ -67,6 +67,18 @@ Invoke-RestMethod "$base/v1/tasks/$taskId/trace" -Headers $owner | ConvertTo-Jso
 .\.venv\Scripts\python.exe scripts\m4_demo.py coding
 ```
 
-Coding 演示经过真实 Docker、文件写入、pytest 和控制平面的独立合同。演示默认 scripted，不消耗 API 额度。开启 DeepSeek 必须显式给 serve 加 `--allow-deepseek`，并在任务中设置 provider；当前新服务账本默认预算为 5.00 CNY/80 次，历史 M3 的 0.50 元账本保留。
+Coding 演示经过真实 Docker、文件写入、pytest 和控制平面的独立合同。演示默认 scripted，不消耗 API 额度。开启 DeepSeek 必须显式给 serve 和 worker 都加 `--allow-deepseek`，并在任务中设置 provider。API 和每个 worker 必须使用相同的 `--budget-db`、`--budget-id`、`--budget-cny`、`--max-provider-calls` 与 provider 配置，否则配置指纹会阻止任务继续。账本路径会以摘要绑定进任务配置，不会写入 trace。
+
+下面是两个 PowerShell 窗口的最小启动示例。凭据文件只由进程从本地受保护路径读取，不要把 API key 放进命令行参数、任务 JSON 或仓库：
+
+```powershell
+# 窗口 1：API
+.\.venv\Scripts\python.exe -m safeharness serve --allow-deepseek --credentials ..\pico-api.txt --budget-db artifacts\provider-budget.sqlite3 --budget-id service-deepseek-v2 --budget-cny 5.00 --max-provider-calls 80
+
+# 窗口 2：worker（参数必须与 API 完全一致）
+.\.venv\Scripts\python.exe -m safeharness worker --allow-deepseek --credentials ..\pico-api.txt --budget-db artifacts\provider-budget.sqlite3 --budget-id service-deepseek-v2 --budget-cny 5.00 --max-provider-calls 80
+```
+
+当前价格预算按照官方峰时未命中缓存价格，以 1 USD ≤ 8 CNY 的运营假设向上取整。该汇率上限是显式估算参数，不是汇率保证；DeepSeek 官方价格可能变更，升级前需复核。详见[阶段 2 实施记录](phase2-execution.md)。
 
 `deploy/compose.postgres.yml` 提供另一种 PostgreSQL 部署方式，使用相同的固定镜像摘要、资源上限和回环端口。它与 `postgres-up` 是两种启动方式，不能同时占用 15433；本机已使用后者，Compose 仅做过配置验证，不要另外启动它覆盖现有服务。数据库迁移版本为 `0017_queued_approvals`。升级前先停止旧 API/worker/扫描器，对共享库备份，再由单一进程迁移并启动同版本服务。生产部署仍需 TLS、身份与密钥生命周期、涵盖手动任务与费用的容量控制、完整在途副作用协议、备份与保留策略；详见威胁模型。

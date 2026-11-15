@@ -388,6 +388,50 @@ class InvocationLedger:
             value = active_run(connection, self.task_id)
         return UUID(value) if value else None
 
+    def reusable_model_response(self, model, origin, request_sha):
+        """Return a confirmed, integrity-checked response for an identical prompt."""
+        from .scheduling import CURRENT_CLAIM, require_claim
+
+        claim = CURRENT_CLAIM.get()
+        if claim is None or claim.recovery_mode != "resume":
+            return None
+        with self.engine.connect() as connection:
+            require_claim(connection, self.task_id)
+            row = execute(
+                connection,
+                "SELECT a.content,a.byte_count,a.sha256 FROM logical_calls c JOIN call_attempts t ON t.call_id=c.call_id JOIN call_artifacts a ON a.attempt_id=t.attempt_id JOIN runtime_checkpoints p ON p.checkpoint_id=? WHERE c.task_id=? AND p.task_id=c.task_id AND c.created_at>=p.created_at AND c.tool_name=? AND c.kind='model' AND c.origin=? AND c.request_sha256=? AND c.status='SUCCEEDED' AND t.status='SUCCEEDED' AND a.kind='model_response' ORDER BY t.finished_at DESC LIMIT 1",
+                (claim.checkpoint_id, self.task_id.hex, model, origin, request_sha),
+            ).fetchone()
+            if (
+                row is None
+                and execute(
+                    connection,
+                    "SELECT 1 FROM logical_calls c JOIN runtime_checkpoints p ON p.checkpoint_id=? WHERE c.task_id=? AND p.task_id=c.task_id AND c.kind='model' AND c.created_at>=p.created_at AND p.phase='before_model' LIMIT 1",
+                    (claim.checkpoint_id, self.task_id.hex),
+                ).first()
+            ):
+                raise InvocationConflictError(
+                    "Recovery prompt does not match confirmed response"
+                )
+        if row is None:
+            return None
+        content = bytes(row[0])
+        if (
+            not content
+            or len(content) != row[1]
+            or hashlib.sha256(content).hexdigest() != row[2]
+        ):
+            raise InvocationConflictError("Model response artifact integrity error")
+        try:
+            response = json.loads(content)
+        except (UnicodeDecodeError, json.JSONDecodeError):
+            raise InvocationConflictError(
+                "Model response artifact is invalid"
+            ) from None
+        if not isinstance(response, dict) or response.get("role") != "assistant":
+            raise InvocationConflictError("Model response artifact is invalid")
+        return response
+
     def start(self, name, kind, origin, request_sha=None, *, standalone=False):
         from .scheduling import require_claim
 

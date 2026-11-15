@@ -35,7 +35,14 @@ from .execution import (
 from .failures import RuntimePersistenceError
 from .harness import Harness
 from .invocations import InvocationLedger
-from .provider import DeepSeekAdapter, DeepSeekClient, ProviderError, load_credentials
+from .provider import (
+    ENDPOINT,
+    MODEL,
+    DeepSeekAdapter,
+    DeepSeekClient,
+    ProviderError,
+    load_credentials,
+)
 from .runtime import FinalAnswer
 from .scheduling import CURRENT_CLAIM, require_claim
 from .task import TaskStatus
@@ -129,9 +136,8 @@ class TaskInput(BaseModel):
     def supported_queue(self):
         if self.execution_mode == "queued" and (
             self.scenario not in {"ticket_read", "ticket_update", "ticket_update_read"}
-            or self.provider != "scripted"
         ):
-            raise ValueError("Queued mode supports scripted ticket scenarios only")
+            raise ValueError("Queued mode supports ticket scenarios only")
         return self
 
 
@@ -214,6 +220,25 @@ class TaskService:
             "limit_cny": budget_cny,
             "max_calls": max_provider_calls,
         }
+        self.provider_configuration = {
+            "provider": "deepseek",
+            "endpoint": ENDPOINT,
+            "model": MODEL,
+            "policy_version": "queued-deepseek-v1",
+            "max_output_tokens": 768,
+            "timeout_seconds": 20,
+            "max_attempts": 2,
+            "pricing_version": BudgetLedger.PRICING_VERSION,
+            "budget": self.provider_budget,
+            "budget_store_sha256": hashlib.sha256(
+                str(Path(budget_path).resolve()).encode("utf-8")
+            ).hexdigest(),
+        }
+        self.provider_ledger = (
+            BudgetLedger(self.budget_path, **self.provider_budget)
+            if self.allow_deepseek
+            else None
+        )
         self.business.initialize()
 
     def owned(self, task_id, principal, *, review=False):
@@ -339,7 +364,7 @@ class TaskService:
                     raise HTTPException(403, "paid_provider_disabled")
                 client = DeepSeekClient(
                     load_credentials(self.credentials_path),
-                    BudgetLedger(self.budget_path, **self.provider_budget),
+                    self.provider_ledger,
                 )
                 instruction = (
                     "Fix clamp in solution.py, including ValueError for reversed bounds, then run tests/test_solution.py."
@@ -423,7 +448,7 @@ class TaskService:
                         "coding_policy": CODING_POLICY_VERSION,
                         "verifier": "clamp-contract-v1/ticket-v1",
                         **(
-                            {"provider_budget": self.provider_budget}
+                            {"provider": self.provider_configuration}
                             if request.provider == "deepseek"
                             else {}
                         ),

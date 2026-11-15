@@ -17,7 +17,7 @@ from .agent import ToolCallingAgent
 from .budget import BudgetError, BudgetLedger
 from .contracts import CURRENT_CALL
 from .failures import ToolExecutionError
-from .invocations import InvocationLedger
+from .invocations import InvocationConflictError, InvocationLedger
 from .runtime import RunInterrupted
 from .trace import TraceLog
 
@@ -80,6 +80,7 @@ class DeepSeekClient:
         self.max_attempts = max_attempts
         self.sleeper = sleeper
         self.max_input_bytes = max_input_bytes
+        self._recovery_checked = False
 
     def _http(self, payload, timeout):
         request = urllib.request.Request(
@@ -106,10 +107,13 @@ class DeepSeekClient:
             }
             raise ProviderError(
                 codes.get(exc.code, "provider_http_error"),
-                retryable=exc.code == 429 or exc.code >= 500,
+                # A definite rate-limit response can be retried. A server error
+                # may arrive after processing, so treat it as an uncertain
+                # result and never issue a second paid request automatically.
+                retryable=exc.code == 429,
             ) from None
         except (OSError, urllib.error.URLError):
-            raise ProviderError("provider_connection_error", retryable=True) from None
+            raise ProviderError("provider_connection_error") from None
         except ValueError:
             raise ProviderError("provider_invalid_json") from None
 
@@ -149,15 +153,16 @@ class DeepSeekClient:
             except ProviderError as exc:
                 mailbox.put((False, exc))
             except Exception:  # noqa: BLE001 - never expose raw transport errors or credentials
-                mailbox.put(
-                    (False, ProviderError("provider_connection_error", retryable=True))
-                )
+                mailbox.put((False, ProviderError("provider_connection_error")))
 
         threading.Thread(target=invoke, daemon=True).start()
         try:
             success, result = mailbox.get(timeout=timeout)
         except queue.Empty:
-            raise ProviderError("provider_timeout", retryable=True) from None
+            # The provider may have accepted and completed the request even
+            # though the local deadline elapsed. Preserve UNKNOWN and do not
+            # replay a potentially billable request automatically.
+            raise ProviderError("provider_timeout") from None
         if not success:
             raise result
         return result
@@ -191,12 +196,35 @@ class DeepSeekClient:
         if len(body) > self.max_input_bytes or len(messages) > 32:
             raise ProviderError("provider_context_limit")
         accounting = InvocationLedger(trace.database, task_id)
+        request_sha = hashlib.sha256(body).hexdigest()
+        try:
+            replay = (
+                accounting.reusable_model_response(MODEL, "deepseek", request_sha)
+                if not self._recovery_checked
+                else None
+            )
+            self._recovery_checked = True
+        except InvocationConflictError:
+            raise ProviderError("provider_replay_evidence_invalid") from None
+        if replay is not None:
+            trace.emit(
+                "model.response_reused",
+                {
+                    "provider": "deepseek",
+                    "model": MODEL,
+                    "prompt_sha256": request_sha,
+                    "response_sha256": hashlib.sha256(
+                        json.dumps(replay, sort_keys=True).encode()
+                    ).hexdigest(),
+                },
+            )
+            return replay
         standalone = accounting.active_run_id() is None
         identity = accounting.start(
             MODEL,
             "model",
             "deepseek",
-            hashlib.sha256(body).hexdigest(),
+            request_sha,
             standalone=standalone,
         )
         token = CURRENT_CALL.set(identity)
@@ -313,7 +341,12 @@ class DeepSeekClient:
             accounting.finish(
                 identity,
                 "UNKNOWN"
-                if error.code in {"provider_timeout", "provider_connection_error"}
+                if error.code
+                in {
+                    "provider_timeout",
+                    "provider_connection_error",
+                    "provider_http_error",
+                }
                 else "FAILED",
                 error.code,
             )
@@ -328,7 +361,11 @@ class DeepSeekClient:
                     "elapsed_ms": int((time.monotonic() - started) * 1000),
                 },
             )
-            if not error.retryable or attempt == self.max_attempts:
+            if (
+                error.code != "rate_limited"
+                or not error.retryable
+                or attempt == self.max_attempts
+            ):
                 raise error
             delay = min(0.25 * 2 ** (attempt - 1), 1)
             if deadline is not None and time.monotonic() + delay >= deadline:

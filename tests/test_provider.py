@@ -1,9 +1,11 @@
 import json
+import multiprocessing
+import sqlite3
 import time
 from concurrent.futures import ThreadPoolExecutor
 from decimal import Decimal
 from unittest.mock import Mock
-from uuid import uuid4
+from uuid import UUID, uuid4
 
 import pytest
 
@@ -22,6 +24,16 @@ from safeharness.runtime import run_task
 from safeharness.task import TaskStatus
 from safeharness.task_store import TaskStore
 from safeharness.trace import TraceLog
+
+
+def _process_reserve_budget(path, task_id, output):
+    try:
+        ledger = BudgetLedger(path, budget_id="process-shared", max_calls=3)
+        ledger.reserve(uuid4(), UUID(task_id), 100, 20)
+        output.put("reserved")
+    except BudgetError:
+        output.put("exhausted")
+
 
 KEY = "sk-" + "synthetic-not-a-real-key-12345678"
 
@@ -73,14 +85,35 @@ def test_budget_persists_and_reserves_failed_unknown_usage(tmp_path):
     attempt, task = uuid4(), uuid4()
     ledger.reserve(attempt, task, 100, 20)
     reopened = BudgetLedger(path, limit_cny=Decimal("0.001"), max_calls=3)
-    assert reopened.usage()["cost_upper_cny"] == "0.00036"
+    assert reopened.usage()["cost_upper_cny"] == "0.0005"
     assert reopened.usage()["unknown_usage_calls"] == 1
-    assert reopened.settle(attempt, 20, 5) == "0.00008"
-    assert ledger.usage()["cost_upper_cny"] == "0.00008"
+    assert reopened.settle(attempt, 20, 5) == "0.00011"
+    assert ledger.usage()["cost_upper_cny"] == "0.00011"
     with pytest.raises(BudgetError):
         ledger.settle(attempt, 20, 5)
     with pytest.raises(BudgetError):
         BudgetLedger(path, limit_cny=Decimal(1), max_calls=3)
+
+
+def test_budget_reprices_legacy_settled_usage_and_unknown_reservations(tmp_path):
+    path = tmp_path / "legacy-budget.sqlite3"
+    connection = sqlite3.connect(path)
+    connection.executescript(
+        "CREATE TABLE budgets (budget_id TEXT PRIMARY KEY, limit_micro INTEGER NOT NULL, max_calls INTEGER NOT NULL);"
+        "CREATE TABLE requests (attempt_id TEXT PRIMARY KEY, budget_id TEXT NOT NULL, task_id TEXT NOT NULL, reserved_micro INTEGER NOT NULL, settled_micro INTEGER, prompt_tokens INTEGER, completion_tokens INTEGER, status TEXT NOT NULL, created_at TEXT NOT NULL);"
+        "INSERT INTO budgets VALUES ('legacy',1000000,10);"
+        "INSERT INTO requests VALUES ('settled','legacy','task-a',360,360,100,20,'SETTLED','2026-11-01T00:00:00+00:00');"
+        "INSERT INTO requests VALUES ('unknown','legacy','task-b',360,NULL,NULL,NULL,'RESERVED','2026-11-01T00:00:00+00:00');"
+    )
+    connection.close()
+
+    ledger = BudgetLedger(path, budget_id="legacy", limit_cny="1.00", max_calls=10)
+
+    usage = ledger.usage()
+    assert usage["calls"] == 2
+    assert usage["cost_upper_cny"] == "0.00104"
+    assert usage["unknown_usage_calls"] == 1
+    assert usage["pricing_versions"] == [BudgetLedger.PRICING_VERSION]
 
 
 def test_concurrent_reservations_cannot_exceed_call_limit(tmp_path):
@@ -96,6 +129,32 @@ def test_concurrent_reservations_cannot_exceed_call_limit(tmp_path):
     with ThreadPoolExecutor(max_workers=6) as pool:
         assert sum(pool.map(reserve, range(12))) == 3
     assert ledger.usage()["calls"] == 3
+
+
+def test_multiprocess_reservations_share_one_persistent_budget(tmp_path):
+    path = tmp_path / "multiprocess-budget.sqlite3"
+    BudgetLedger(path, budget_id="process-shared", max_calls=3)
+    context = multiprocessing.get_context("spawn")
+    output = context.Queue()
+    task_id = uuid4().hex
+    processes = [
+        context.Process(target=_process_reserve_budget, args=(path, task_id, output))
+        for _ in range(8)
+    ]
+
+    for process in processes:
+        process.start()
+    results = [output.get(timeout=15) for _ in processes]
+    for process in processes:
+        process.join(timeout=15)
+        assert process.exitcode == 0
+
+    assert results.count("reserved") == 3
+    assert results.count("exhausted") == 5
+    assert (
+        BudgetLedger(path, budget_id="process-shared", max_calls=3).usage()["calls"]
+        == 3
+    )
 
 
 def test_credentials_are_not_represented_or_echoed(tmp_path, monkeypatch):
@@ -146,12 +205,30 @@ def test_retry_is_bounded_and_each_attempt_is_reserved(provider_context):
     assert all(e["run_id"] == invocations["runs"][0]["run_id"] for e in events)
 
 
+def test_normal_identical_prompts_are_not_cached(
+    provider_context,
+):
+    _, task, trace, ledger = provider_context
+    transport = Mock(return_value=response())
+    client = DeepSeekClient(Credentials(KEY), ledger, transport=transport)
+    messages = [{"role": "user", "content": "hello"}]
+
+    first = client.complete(messages, task_id=task.task_id, trace=trace)
+    replayed = client.complete(messages, task_id=task.task_id, trace=trace)
+
+    assert first == replayed
+    assert transport.call_count == 2
+    assert ledger.usage()["calls"] == 2
+    assert not any(event["kind"] == "model.response_reused" for event in trace.read())
+
+
 @pytest.mark.parametrize(
     "code,retryable,expected",
     [
         ("authentication_failed", False, 1),
         ("insufficient_balance", False, 1),
-        ("provider_connection_error", True, 2),
+        ("provider_connection_error", False, 1),
+        ("provider_timeout", False, 1),
     ],
 )
 def test_provider_failures_do_not_retry_forever(
@@ -167,6 +244,9 @@ def test_provider_failures_do_not_retry_forever(
             [{"role": "user", "content": "hello"}], task_id=task.task_id, trace=trace
         )
     assert transport.call_count == expected
+    if code in {"provider_connection_error", "provider_timeout"}:
+        assert ledger.usage()["calls"] == 1
+        assert ledger.usage()["unknown_usage_calls"] == 1
 
 
 def test_exhausted_budget_never_dispatches_http(provider_context, tmp_path):
@@ -262,22 +342,24 @@ def test_duplicate_call_ids_fail_before_tools_and_persist_failed_state(
 
 def test_total_transport_deadline_and_context_cap(provider_context):
     _, task, trace, ledger = provider_context
-    transport = Mock(side_effect=lambda *_: (time.sleep(0.2), response())[1])
+    transport = Mock(side_effect=lambda *_: (time.sleep(0.5), response())[1])
     client = DeepSeekClient(
-        Credentials(KEY), ledger, transport=transport, timeout=0.02, max_attempts=1
+        Credentials(KEY), ledger, transport=transport, timeout=0.02, max_attempts=2
     )
     started = time.monotonic()
     with pytest.raises(ProviderError, match="provider_timeout"):
         client.complete([], task_id=task.task_id, trace=trace)
-    assert time.monotonic() - started < 0.15
-    calls = transport.call_count
+    assert time.monotonic() - started < 0.35
+    assert transport.call_count == 1
+    assert ledger.usage()["calls"] == 1
+    assert ledger.usage()["unknown_usage_calls"] == 1
     with pytest.raises(ProviderError, match="provider_context_limit"):
         client.complete(
             [{"role": "user", "content": "x" * 30000}],
             task_id=task.task_id,
             trace=trace,
         )
-    assert transport.call_count == calls
+    assert transport.call_count == 1
 
 
 def test_model_batch_is_serialized_through_gateway_with_separate_steps(

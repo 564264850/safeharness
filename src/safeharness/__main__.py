@@ -277,6 +277,22 @@ def _main(argv: Sequence[str] | None = None) -> int:
             )
         if name in {"serve", "worker"}:
             service.add_argument("--business-config", type=Path)
+            service.add_argument(
+                "--allow-deepseek",
+                action="store_true",
+                help="Enable the fixed DeepSeek provider for authorized ticket tasks",
+            )
+            service.add_argument(
+                "--credentials", type=Path, default=Path("../pico-api.txt")
+            )
+            service.add_argument(
+                "--budget-db",
+                type=Path,
+                default=Path("artifacts/provider-budget.sqlite3"),
+            )
+            service.add_argument("--budget-id", default="service-deepseek-v2")
+            service.add_argument("--budget-cny", type=Decimal, default=Decimal("5.00"))
+            service.add_argument("--max-provider-calls", type=int, default=80)
         if name == "worker":
             modes = service.add_mutually_exclusive_group()
             modes.add_argument("--once", action="store_true")
@@ -293,7 +309,6 @@ def _main(argv: Sequence[str] | None = None) -> int:
         if name == "serve":
             service.add_argument("--port", type=int, default=18081)
             service.add_argument("--max-pending", type=int, default=1000)
-            service.add_argument("--allow-deepseek", action="store_true")
             service.add_argument(
                 "--scan-profile", choices=("hardened", "vulnerable-lab")
             )
@@ -460,6 +475,14 @@ def _main(argv: Sequence[str] | None = None) -> int:
                     worker_id=args.worker_id,
                     lease_seconds=args.lease_seconds,
                     heartbeat_seconds=args.heartbeat_seconds,
+                    task_service_settings={
+                        "allow_deepseek": args.allow_deepseek,
+                        "credentials_path": args.credentials,
+                        "budget_path": args.budget_db,
+                        "budget_id": args.budget_id,
+                        "budget_cny": str(args.budget_cny),
+                        "max_provider_calls": args.max_provider_calls,
+                    },
                 )
             except (SQLAlchemyError, QueueClaimError, ValueError):
                 print(
@@ -477,6 +500,11 @@ def _main(argv: Sequence[str] | None = None) -> int:
             business,
             load_principals(args.config_dir / "service-auth.json"),
             allow_deepseek=args.allow_deepseek,
+            credentials_path=args.credentials,
+            budget_path=args.budget_db,
+            budget_id=args.budget_id,
+            budget_cny=str(args.budget_cny),
+            max_provider_calls=args.max_provider_calls,
             scan_profile=args.scan_profile,
             max_pending=args.max_pending,
         )

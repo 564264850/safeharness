@@ -56,7 +56,9 @@ These are reproducible project results, with the full scope and caveats linked i
 
 | Check | Recorded result | Scope |
 | --- | --- | --- |
-| Current regression rerun | 493 passed, 0 skipped | Docker and PostgreSQL enabled; Windows host, 2026-11-15 |
+| Phase 2.3/2.4 full regression | 517 passed, 0 skipped | Docker and PostgreSQL enabled; Windows host, 2026-11-15; 120 acceptance cases deselected |
+| Phase 2.5/2.6 targeted regression | 48 passed | Queued approval and DeepSeek fault cases; SQLite and PostgreSQL, 2026-11-15 |
+| Real queued DeepSeek approval | Two successful runs; 8 model calls total | Separate API/workers, synthetic ticket/reviewer, worker restart, one write per run; [report](docs/evidence/phase2/README.md) |
 | Prior regression baseline | 483 passed, 0 skipped | Docker and PostgreSQL enabled; recorded 2026-11-14 |
 | Fixed development acceptance | 120 instances passed | Development dataset, not a holdout benchmark |
 | Repeated scheduler fault windows | 240 test instances passed | Four named fault windows, SQLite and PostgreSQL, 30 repetitions each |
@@ -68,7 +70,7 @@ Portable machine-readable summaries and raw selected demo reports live in [the c
 
 ## Current limits
 
-- The queue supports scripted ticket scenarios only; DeepSeek and coding are not yet durable queued workloads.
+- The queue supports scripted and explicitly enabled DeepSeek ticket scenarios. Coding is not a durable queued workload; cross-host budget sharing is not implemented.
 - Business-write recovery is verified against a local idempotent mock service, not arbitrary third-party APIs or a general exactly-once guarantee.
 - The one-hour soak used a fixed ticket and status with a bounded submit rate. It does not establish throughput capacity, an SLA, or behavior under sustained outages.
 - The approval path has no full operator resolution UI for `NEEDS_REVIEW` cases.

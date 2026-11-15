@@ -26,12 +26,15 @@ class QueueWorker:
         worker_id=None,
         lease_seconds=30,
         heartbeat_seconds=5,
+        task_service_settings=None,
     ):
         validate_intervals(lease_seconds, heartbeat_seconds)
         self.store = store
         self.lease_seconds, self.heartbeat_seconds = lease_seconds, heartbeat_seconds
         self.worker_id = worker_id or "worker-" + uuid4().hex[:16]
-        self.service = TaskService(store, business, principals)
+        self.service = TaskService(
+            store, business, principals, **(task_service_settings or {})
+        )
 
     def run_once(self):
         claim = claim_next(self.store, self.worker_id, lease_seconds=self.lease_seconds)
@@ -156,6 +159,7 @@ def run_worker(
     worker_id=None,
     lease_seconds=30,
     heartbeat_seconds=5,
+    task_service_settings=None,
 ):
     if not 0.05 <= poll_seconds <= 30:
         raise ValueError("Worker poll interval must be between 0.05 and 30 seconds")
@@ -166,6 +170,7 @@ def run_worker(
         worker_id=worker_id,
         lease_seconds=lease_seconds,
         heartbeat_seconds=heartbeat_seconds,
+        task_service_settings=task_service_settings,
     )
     stopped = Event()
     try:

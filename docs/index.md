@@ -4,6 +4,7 @@
 
 - [README](../README.md) — project purpose, architecture, quickstart, evidence, and scope.
 - [Job-oriented improvement plan](job-oriented-plan.md) — stages for the Agent Runtime / AI application internship portfolio.
+- [Phase 2 execution record](phase2-execution.md) — queued DeepSeek, budget persistence, recovery, and acceptance path.
 - [External review triage](external-review-triage.md) — which findings are confirmed, stale, design limits, or still unverified.
 - [CLI walkthrough](cli-walkthrough.md) — full local command and approval examples retained from the earlier README.
 - [Roadmap](roadmap.md) — core contracts, failure windows, and validation plan.
@@ -21,6 +22,7 @@
 - [Evaluation guide](evaluation.md) · [M3 results](m3-results.md) · [M4 results](m4-results.md)
 - [Verification truth](verification-truth.md) · [DeepSeek web program](deepseek-program.md) · [Loop audit](loop-audit.md)
 - [Portable baseline evidence](evidence/baseline/README.md) · [Evidence history](evidence/)
+- [Real DeepSeek queued approval](evidence/phase2/README.md) — separate API/worker processes, reviewer approval, receipt and usage evidence.
 
 ## Operations and scheduler
 

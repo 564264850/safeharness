@@ -107,6 +107,7 @@ FIELDS = {
         "attempt",
         "elapsed_ms",
     },
+    "model.response_reused": {"provider", "model", "prompt_sha256", "response_sha256"},
     "verification": {"passed", "code", "case_count", "verifier_version"},
     "checkpoint": {"revision", "context_sha256", "completed_calls", "stop_reason"},
     "runtime.error": {
@@ -125,6 +126,7 @@ for _kind in (
     "model.request",
     "model.result",
     "model.error",
+    "model.response_reused",
     "execution.intent",
     "execution.result",
 ):

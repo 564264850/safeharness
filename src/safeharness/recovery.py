@@ -23,11 +23,12 @@ def classify(connection, task, queue, max_recoveries):
             (task.task_id.hex,),
         ).scalar_one()
         request = canonical_request(json.loads(raw))
+        provider = request.get("provider", "scripted")
         if (
             request.get("execution_mode") != "queued"
             or request.get("scenario")
             not in {"ticket_read", "ticket_update", "ticket_update_read"}
-            or request.get("provider", "scripted") != "scripted"
+            or provider not in {"scripted", "deepseek"}
         ):
             raise ValueError("Unsupported recovery request")
     except (ValueError, TypeError, RecursionError):
@@ -42,6 +43,27 @@ def classify(connection, task, queue, max_recoveries):
         (task.task_id.hex,),
     ).first():
         return decision("review", "unconfirmed_call")
+    if provider == "deepseek":
+        models = execute(
+            connection,
+            "SELECT c.status,a.content,a.byte_count,a.sha256 FROM logical_calls c LEFT JOIN call_attempts t ON t.call_id=c.call_id AND t.status='SUCCEEDED' LEFT JOIN call_artifacts a ON a.attempt_id=t.attempt_id AND a.kind='model_response' WHERE c.task_id=? AND c.kind='model'",
+            (task.task_id.hex,),
+        ).fetchall()
+        for status, content, size, sha in models:
+            try:
+                content = bytes(content)
+                message = json.loads(content)
+                if (
+                    status != "SUCCEEDED"
+                    or not 0 < len(content) <= 262144
+                    or len(content) != size
+                    or hashlib.sha256(content).hexdigest() != sha
+                    or not isinstance(message, dict)
+                    or message.get("role") != "assistant"
+                ):
+                    raise ValueError("Invalid response evidence")
+            except (TypeError, ValueError, RecursionError):
+                return decision("review", "invalid_model_response_evidence")
     if execute(
         connection,
         "SELECT 1 FROM tool_executions e JOIN pending_approvals a ON e.operation_id=a.approval_id WHERE a.task_id=? AND e.status IN ('INTENT','UNKNOWN') LIMIT 1",
@@ -71,7 +93,7 @@ def classify(connection, task, queue, max_recoveries):
     calls = (
         execute(
             connection,
-            "SELECT call_id FROM logical_calls WHERE task_id=?",
+            "SELECT call_id FROM logical_calls WHERE task_id=? AND kind<>'model'",
             (task.task_id.hex,),
         )
         .scalars()
@@ -124,7 +146,8 @@ def classify(connection, task, queue, max_recoveries):
         ):
             raise ValueError("Checkpoint steps")
         if (
-            payload["model"] is not None
+            (payload["model"] is not None and provider != "deepseek")
+            or (payload["model"] is not None and not isinstance(payload["model"], dict))
             or payload["workspace"] is not None
             or not isinstance(payload["results"], list)
         ):
