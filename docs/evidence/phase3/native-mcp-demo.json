@@ -1,0 +1,136 @@
+{
+  "task_id": "a7b7b42c-de4d-4d72-846e-3d5bae7a7162",
+  "status": "SUCCEEDED",
+  "application": {
+    "app_id": "ticket-docs",
+    "version": "1",
+    "verifier": "ticket-docs-contract-v1",
+    "native_tools": [
+      "read_ticket"
+    ],
+    "native_contracts": [
+      {
+        "name": "read_ticket",
+        "version": 1,
+        "schema": {
+          "additionalProperties": false,
+          "properties": {
+            "ticket_id": {
+              "pattern": "^IT-[0-9]{3}$",
+              "title": "Ticket Id",
+              "type": "string"
+            }
+          },
+          "required": [
+            "ticket_id"
+          ],
+          "title": "ReadTicketArgs",
+          "type": "object"
+        },
+        "access": "read",
+        "target": "ticket"
+      }
+    ],
+    "extensions": [
+      {
+        "name": "kb_read_document",
+        "version": 1,
+        "schema": {
+          "additionalProperties": false,
+          "properties": {
+            "document_id": {
+              "pattern": "^KB-[0-9]{3}$",
+              "title": "Document Id",
+              "type": "string"
+            }
+          },
+          "required": [
+            "document_id"
+          ],
+          "title": "DocumentArgs",
+          "type": "object"
+        },
+        "policy": "kb-read-v1",
+        "scope": [
+          "KB-001"
+        ],
+        "adapter": "3debe945632affcfc1c42d7b23de18388c1bd1b916debde40c941b499c1e3252",
+        "timeout": 5,
+        "output_limit": 16384
+      }
+    ]
+  },
+  "application_sha256": "736d38b7bd093dd1fa687f34c6542b17879c9b68a1e10b583bcfdfa9f80bf744",
+  "mcp_transport": "actual-local-stdio",
+  "model": "scripted",
+  "business": "synthetic",
+  "calls": [
+    {
+      "call_id": "3838db6a-0513-4f57-b9fc-50e6f1b1b170",
+      "task_id": "a7b7b42c-de4d-4d72-846e-3d5bae7a7162",
+      "run_id": "26b93ae9-401f-412c-8d59-55f6b75fbdb6",
+      "ordinal": 1,
+      "kind": "tool",
+      "origin": "runtime",
+      "tool_name": "read_ticket",
+      "tool_version": 1,
+      "policy_version": "mock-ticket-v1",
+      "request_sha256": "c35ae3873fd274eb2c87a99a8259228e60db06e4813c070db1e5228a8dcc8467",
+      "arguments_sha256": "f087a026a80497f5ef564509a3770140de1014eb145503db43e95a25ca20b685",
+      "operation_id": null,
+      "status": "SUCCEEDED",
+      "code": "ticket_read",
+      "created_at": "2026-11-15T06:31:50.315+00:00",
+      "finished_at": "2026-11-15T06:31:50.337+00:00"
+    },
+    {
+      "call_id": "1236a318-ffc3-4aa3-a27e-6091669ffc7d",
+      "task_id": "a7b7b42c-de4d-4d72-846e-3d5bae7a7162",
+      "run_id": "26b93ae9-401f-412c-8d59-55f6b75fbdb6",
+      "ordinal": 2,
+      "kind": "tool",
+      "origin": "runtime",
+      "tool_name": "kb_read_document",
+      "tool_version": 1,
+      "policy_version": "kb-read-v1",
+      "request_sha256": "9ae7c94d1b3331a79d1138d0ffc3e29cf4045380cd419bd0ddfd3a6d0d732408",
+      "arguments_sha256": "a5f832af62c8131330b453695e541422987234babcfded27bcc99b066f409bda",
+      "operation_id": null,
+      "status": "SUCCEEDED",
+      "code": "mcp_tool_read",
+      "created_at": "2026-11-15T06:31:50.397+00:00",
+      "finished_at": "2026-11-15T06:31:51.014+00:00"
+    }
+  ],
+  "attempts": [
+    {
+      "attempt_id": "4a5f918a-4e2b-4bfc-8c8a-6f1d64a9d7b0",
+      "task_id": "a7b7b42c-de4d-4d72-846e-3d5bae7a7162",
+      "run_id": "26b93ae9-401f-412c-8d59-55f6b75fbdb6",
+      "call_id": "3838db6a-0513-4f57-b9fc-50e6f1b1b170",
+      "attempt_index": 1,
+      "kind": "tool",
+      "status": "SUCCEEDED",
+      "code": "ticket_read",
+      "started_at": "2026-11-15T06:31:50.318+00:00",
+      "finished_at": "2026-11-15T06:31:50.337+00:00"
+    },
+    {
+      "attempt_id": "1e2207dc-9403-4f79-bd2b-ddd7590938c8",
+      "task_id": "a7b7b42c-de4d-4d72-846e-3d5bae7a7162",
+      "run_id": "26b93ae9-401f-412c-8d59-55f6b75fbdb6",
+      "call_id": "1236a318-ffc3-4aa3-a27e-6091669ffc7d",
+      "attempt_index": 1,
+      "kind": "tool",
+      "status": "SUCCEEDED",
+      "code": "mcp_tool_read",
+      "started_at": "2026-11-15T06:31:50.398+00:00",
+      "finished_at": "2026-11-15T06:31:51.013+00:00"
+    }
+  ],
+  "provenance": {
+    "source_run": "d239114ceffd424490b884be96a3e2dd",
+    "raw_report_sha256": "6c199b543195b89d66fc7fc1c5f690b8f83bb7ac04386bbec2ab9e5d589be4d0",
+    "scope": "scripted planner, actual local MCP stdio, synthetic data"
+  }
+}

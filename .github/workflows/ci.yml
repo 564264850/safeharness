@@ -40,6 +40,7 @@ jobs:
           uv run --no-sync python scripts/scheduler_soak.py --duration-seconds 20 --submit-interval 0.5
           uv run --no-sync python scripts/harness_demo.py
           uv run --no-sync python scripts/harness_demo.py --coding
+          uv run --no-sync python scripts/application_demo.py
           uv run --no-sync python scripts/check_secrets.py
           uv run --no-sync python scripts/check_secrets.py --staged
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
@@ -53,6 +54,7 @@ jobs:
             artifacts/m4-acceptance/**/junit.xml
             artifacts/invocation-demos/**/report.json
             artifacts/harness-demos/**/report.json
+            artifacts/application-demos/**/report.json
             artifacts/approval-loop-demos/**/report.json
             artifacts/verifier-demos/**/report.json
             artifacts/scheduler-demos/**/report.json

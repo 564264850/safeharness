@@ -64,7 +64,9 @@ These are reproducible project results, with the full scope and caveats linked i
 | Repeated scheduler fault windows | 240 test instances passed | Four named fault windows, SQLite and PostgreSQL, 30 repetitions each |
 | Healthy scheduler soak | 3,600.406 seconds; 1,165 tasks finished | Scripted fixed-ticket workload; 291 writes with 291 receipts and no duplicates |
 | Approval and recovery demos | Passed | Local mock ticket business system; no paid model calls |
-| Hosted CI | [Run 43618882633 passed](https://github.com/564264850/safeharness/actions/runs/43618882633) | Ubuntu 24.04; 493 regression tests plus 120 fixed acceptance cases; 0 paid API calls |
+| Stage 2 hosted CI | [Run 43685338842 passed](https://github.com/564264850/safeharness/actions/runs/43685338842) | Ubuntu 24.04; 523 regression tests plus 120 fixed acceptance cases; 0 paid API calls |
+| Native + controlled MCP | Local demo succeeded; 20 targeted tests passed | Host application registry, local stdio read-only tools, common Gateway and checkpoint; [scope and evidence](docs/evidence/phase3/README.md) |
+| Stage 3 local full regression | 543 passed, 0 skipped | Docker and PostgreSQL enabled; 120 fixed acceptance cases deselected |
 
 Portable machine-readable summaries and raw selected demo reports live in [the checked-in evidence bundle](docs/evidence/baseline/README.md). The prior detailed command reference remains available as the [CLI walkthrough](docs/cli-walkthrough.md); see the [document index](docs/index.md).
 
@@ -74,6 +76,7 @@ Portable machine-readable summaries and raw selected demo reports live in [the c
 - Business-write recovery is verified against a local idempotent mock service, not arbitrary third-party APIs or a general exactly-once guarantee.
 - The one-hour soak used a fixed ticket and status with a bounded submit rate. It does not establish throughput capacity, an SLA, or behavior under sustained outages.
 - The approval path has no full operator resolution UI for `NEEDS_REVIEW` cases.
+- Application/MCP registration is a trusted Python host API; HTTP application selection, remote MCP and MCP writes are not exposed. The bundled MCP document server uses synthetic data and is not sandboxed.
 - Backup/restore drills, key rotation, TLS deployment, multi-tenant production hardening, and a 24-hour soak have not been completed.
 
 ## Project map

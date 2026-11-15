@@ -109,7 +109,7 @@ class ToolSpec:
     version: int
     input_schema: type[BaseModel]
     access: Literal["read", "write", "execute"]
-    target: Literal["ticket", "coding"] = "ticket"
+    target: Literal["ticket", "coding", "extension"] = "ticket"
     timeout_seconds: int = 15
     max_output_bytes: int = 131072
 
@@ -171,6 +171,7 @@ class ToolGateway:
         test_paths: frozenset[str] = frozenset(),
         audit: AuditLog | None = None,
         ticket_reader=None,
+        application=None,
     ):
         self._tickets = tickets if tickets is not None else {}
         self._ticket_scopes = {"read": allowed_tickets, "write": writable_tickets}
@@ -182,6 +183,10 @@ class ToolGateway:
         }
         self._audit = audit
         self._ticket_reader = ticket_reader
+        self._application = application
+        self._extensions = (
+            {b.spec.name: b for b in application.bindings} if application else {}
+        )
 
     def execute(self, request: ToolRequest) -> ToolResult:
         return self._execute(request, verification=False)
@@ -210,6 +215,15 @@ class ToolGateway:
     def _execute(self, request: ToolRequest, *, verification: bool) -> ToolResult:
         started = time.monotonic()
         spec = _TOOL_SPECS.get(request.name)
+        binding = self._extensions.get(request.name)
+        if binding is not None:
+            spec = binding.spec
+        elif (
+            self._application is not None
+            and request.name not in self._application.native_tools
+            and not verification
+        ):
+            spec = None
         args = None
         resources = ()
         early = None
@@ -262,7 +276,9 @@ class ToolGateway:
                 approval=ApprovalIntent(spec.name, spec.version, canonical),
             )
         policy = (
-            CODING_POLICY_VERSION
+            binding.policy_version
+            if binding is not None
+            else CODING_POLICY_VERSION
             if spec is not None and spec.target == "coding"
             else TICKET_POLICY_VERSION
         )
@@ -330,6 +346,16 @@ class ToolGateway:
         return result
 
     def _authorize(self, spec, args):
+        if spec.target == "extension":
+            binding = self._extensions[spec.name]
+            resources = tuple(binding.resources(args))
+            if not resources or any(
+                r not in binding.allowed_resources for r in resources
+            ):
+                return resources, ToolResult(
+                    spec.name, "denied", "resource_out_of_scope"
+                )
+            return resources, None
         if spec.target == "ticket":
             resources = (args.ticket_id,)
             if args.ticket_id not in self._ticket_scopes[spec.access]:
@@ -362,6 +388,18 @@ class ToolGateway:
         return resources, None
 
     def _dispatch(self, spec, args):
+        if spec.target == "extension":
+            result = self._extensions[spec.name].dispatch(args)
+            if not isinstance(result, ToolResult) or result.name != spec.name:
+                raise ValueError("Invalid adapter result")
+            if result.approval is not None or result.status == "approval_required":
+                raise ValueError("Read-only adapter cannot grant approval")
+            if (
+                result.value is not None
+                and len(result.value.encode("utf-8")) > spec.max_output_bytes
+            ):
+                return ToolResult(spec.name, "failed", "tool_output_limit")
+            return result
         if spec.target == "coding":
             if spec.name == "_verify_tests":
                 return ToolResult(spec.name, "failed", "trusted_contract_required")
